@@ -1,0 +1,29 @@
+header {
+  display: flex;
+  max-width: 1200px;
+  margin: 8px auto;
+  align-items: baseline;
+  .logo {
+    font-family: "Titillium Web", sans-serif;
+    font-size: 1.5rem;
+    padding-top: 0rem;
+    margin-right: 2rem;
+    color: #5cb85c;
+    text-decoration: none;
+  }
+
+  .nav-bar {
+    display: flex;
+    gap: 16px;
+    margin-left: auto;
+    list-style-type: none;
+
+    li {
+      color: rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      &:hover, &.active {
+        color: rgba(0, 0, 0, 0.8);
+      }
+    }
+  }
+}

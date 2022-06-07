@@ -1,0 +1,28 @@
+.setting {
+  text-align: center;
+
+  .setting-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 620px;
+    margin: 16px auto;
+
+    .update-btn {
+      margin-left: auto;
+      color: #fff;
+      background-color: #5cb85c;
+      border-color: #5cb85c;
+
+      &:hover {
+        color: #fff;
+        background-color: #449d44;
+        border-color: #419641;
+      }
+    }
+
+    .logout-btn {
+      margin-right: auto;
+    }
+  }
+}

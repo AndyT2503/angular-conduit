@@ -1,0 +1,41 @@
+.register {
+  text-align: center;
+
+  .login {
+    color: #5cb85c;
+    text-decoration: none;
+
+    &:hover {
+      color: #3d8b3d;
+      text-decoration: underline;
+    }
+  }
+
+  .register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 620px;
+    margin: 16px auto;
+
+    .sign-up-btn {
+      margin-left: auto;
+      color: #fff;
+      background-color: #5cb85c;
+      border-color: #5cb85c;
+
+      &:hover {
+        color: #fff;
+        background-color: #449d44;
+        border-color: #419641;
+      }
+    }
+  }
+
+  .error {
+    margin-right: auto;
+    margin-bottom: 0;
+    color: #B85C5C;
+    font-weight: 600;
+  }
+}
