@@ -1,10 +1,12 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, UpperCasePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  inject,
   OnInit,
 } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter } from 'rxjs';
 import { AuthRepository } from '../../state/auth.repository';
@@ -20,17 +22,19 @@ type NavBarMenu = {
   imports: [CommonModule, RouterModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
+  providers: [UpperCasePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit {
+  private readonly router = inject(Router);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly authRepository = inject(AuthRepository);
+  private readonly titleService = inject(Title);
+  private readonly upperCasePipe = inject(UpperCasePipe);
+
   indexActiveMenu = 0;
 
   navBarMenus: NavBarMenu[] = [];
-  constructor(
-    private router: Router,
-    private cdr: ChangeDetectorRef,
-    private authRepository: AuthRepository
-  ) {}
 
   ngOnInit(): void {
     this.loadMenu();
@@ -85,6 +89,15 @@ export class HeaderComponent implements OnInit {
         this.indexActiveMenu = this.navBarMenus.findIndex(
           (x) => currentUrl == `/${x.url}`
         );
+        if (this.indexActiveMenu !== -1) {
+          this.titleService.setTitle(
+            `${this.navBarMenus[this.indexActiveMenu].title} - Conduit`
+          );
+        } else {
+          const [, title] = currentUrl.split('/');
+          this.titleService.setTitle(`${this.upperCasePipe.transform(title)} - Conduit`);
+        }
+
         this.cdr.markForCheck();
       });
   }

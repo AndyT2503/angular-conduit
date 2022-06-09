@@ -1,0 +1,7 @@
+<div class="banner" *ngIf="!(authUser$ | async)">
+  <h1 class="title">conduit</h1>
+  <p class="description">A place to share your knowledge</p>
+</div>
+<div class="news-feed" [style.marginTop]="!(authUser$ | async) ? '232px' : ''">
+  asd
+</div>

@@ -1,8 +1,8 @@
-import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { HeaderComponent } from './core/layout/header/header.component';
+import { RouterModule } from '@angular/router';
 import { FooterComponent } from './core/layout/footer/footer.component';
+import { HeaderComponent } from './core/layout/header/header.component';
 
 @Component({
   selector: 'app-root',
@@ -12,5 +12,4 @@ import { FooterComponent } from './core/layout/footer/footer.component';
   imports: [CommonModule, HeaderComponent, RouterModule, FooterComponent]
 })
 export class AppComponent {
-  title = 'real-world-conduit';
 }

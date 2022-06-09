@@ -1,19 +1,20 @@
-import { Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  OnInit,
+  inject,
+  OnInit
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
-  Validators,
+  Validators
 } from '@angular/forms';
-import { UserData } from 'src/app/core/data/user.data';
+import { Router, RouterModule } from '@angular/router';
 import { AuthRepository } from 'src/app/core/state/auth.repository';
+import { UserRepository } from 'src/app/core/state/user.repository';
 
 @Component({
   selector: 'app-sign-in',
@@ -24,16 +25,16 @@ import { AuthRepository } from 'src/app/core/state/auth.repository';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignInComponent implements OnInit {
+  private readonly router = inject(Router);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly authRepository = inject(AuthRepository);
+  private readonly userRepository = inject(UserRepository);
+
   loginForm!: FormGroup<{
     email: FormControl<string>;
     password: FormControl<string>;
   }>;
   loginError = '';
-  constructor(
-    private router: Router,
-    private cdr: ChangeDetectorRef,
-    private authRepository: AuthRepository
-  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -53,6 +54,7 @@ export class SignInComponent implements OnInit {
   }
 
   submit(): void {
+    const userList = this.userRepository.store.getValue().users;
     const { password, email } = this.loginForm.value;
     if (this.loginForm.invalid) {
       if (!password) {
@@ -63,13 +65,13 @@ export class SignInComponent implements OnInit {
       this.cdr.markForCheck();
       return;
     }
-    const userIndex = UserData.findIndex(x => x.password === password || x.email === email);
+    const userIndex = userList.findIndex(x => x.password === password && x.email === email);
     if (userIndex === -1) {
       this.loginError = 'email or password invalid';
       this.cdr.markForCheck();
       return;
     }
-    this.authRepository.login(UserData[userIndex]);
+    this.authRepository.login(userList[userIndex]);
     this.router.navigate(['']);
   }
 }

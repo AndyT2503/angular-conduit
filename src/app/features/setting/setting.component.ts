@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -21,6 +21,9 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingComponent implements OnInit {
+  private readonly router = inject(Router);
+  private readonly authRepository = inject(AuthRepository);
+
   settingForm!: FormGroup<{
     username: FormControl<string>;
     bio: FormControl<string | null>;
@@ -28,7 +31,6 @@ export class SettingComponent implements OnInit {
     newPassword: FormControl<string | null>;
     id: FormControl<number>;
   }>;
-  constructor(private authRepository: AuthRepository, private router: Router) {}
 
   ngOnInit(): void {
     this.initForm();

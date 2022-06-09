@@ -3,12 +3,18 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  OnInit
+  inject,
+  OnInit,
 } from '@angular/core';
 import {
-  FormControl, FormGroup, ReactiveFormsModule, Validators
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { AuthRepository } from 'src/app/core/state/auth.repository';
+import { UserRepository } from 'src/app/core/state/user.repository';
 
 @Component({
   selector: 'app-sign-up',
@@ -19,13 +25,17 @@ import { Router, RouterModule } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignUpComponent implements OnInit {
+  private readonly router = inject(Router);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly authRepository = inject(AuthRepository);
+  private readonly userRepository = inject(UserRepository);
+
   registerForm!: FormGroup<{
     email: FormControl<string>;
     password: FormControl<string>;
     username: FormControl<string>;
   }>;
   registerError = '';
-  constructor(private router: Router, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -62,6 +72,19 @@ export class SignUpComponent implements OnInit {
       this.cdr.markForCheck();
       return;
     }
+    const userList = this.userRepository.store.getValue().users;
+    if (userList.some((x) => x.email === email)) {
+      this.registerError = 'user has been existed';
+      return;
+    }
+    const user = {
+      email: email!,
+      password: password!,
+      username: username!,
+      id: Math.random(),
+    };
+    this.userRepository.addUser(user);
+    this.authRepository.login(user);
     this.router.navigate(['']);
   }
 }
