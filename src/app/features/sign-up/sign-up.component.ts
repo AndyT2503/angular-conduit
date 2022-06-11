@@ -84,7 +84,7 @@ export class SignUpComponent implements OnInit {
       id: Math.random(),
     };
     this.userRepository.addUser(user);
-    this.authRepository.login(user);
+    this.authRepository.updateAuthUserInfo(user);
     this.router.navigate(['']);
   }
 }

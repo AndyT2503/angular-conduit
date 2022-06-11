@@ -11,12 +11,13 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ArticleRepository } from 'src/app/core/state/article.repository';
+import { ArticleComponent } from 'src/app/shared/components/article/article.component';
 
 @UntilDestroy()
 @Component({
   selector: 'app-news-feed',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ArticleComponent],
   templateUrl: './news-feed.component.html',
   styleUrls: ['./news-feed.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

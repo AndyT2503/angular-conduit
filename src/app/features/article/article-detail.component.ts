@@ -7,14 +7,14 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({
-  selector: 'app-article',
+  selector: 'app-article-detail',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './article.component.html',
-  styleUrls: ['./article.component.scss'],
+  templateUrl: './article-detail.component.html',
+  styleUrls: ['./article-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ArticleComponent implements OnInit {
+export class ArticleDetailComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly articleRepository = inject(ArticleRepository);
   private readonly router = inject(Router);

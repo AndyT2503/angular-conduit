@@ -71,7 +71,7 @@ export class SignInComponent implements OnInit {
       this.cdr.markForCheck();
       return;
     }
-    this.authRepository.login(userList[userIndex]);
+    this.authRepository.updateAuthUserInfo(userList[userIndex]);
     this.router.navigate(['']);
   }
 }

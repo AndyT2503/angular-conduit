@@ -32,8 +32,8 @@ export const routes: Routes = [
   {
     path: 'article/:slug',
     loadComponent: () =>
-      import('./app/features/article/article.component').then(
-        (x) => x.ArticleComponent
+      import('./app/features/article/article-detail.component').then(
+        (x) => x.ArticleDetailComponent
       ),
   },
 ];

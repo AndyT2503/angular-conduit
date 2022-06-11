@@ -1,18 +1,9 @@
-import { Injectable } from '@angular/core';
-import {
-  createStore,
-  getStore,
-  getStoresSnapshot,
-  StoreDef,
-  withProps,
-} from '@ngneat/elf';
-import {
-  addEntities,
-  selectAllEntities,
-  withEntities,
-} from '@ngneat/elf-entities';
+import { AuthRepository } from './auth.repository';
+import { inject, Injectable } from '@angular/core';
+import { createStore, withProps } from '@ngneat/elf';
 import { localStorageStrategy, persistState } from '@ngneat/elf-persist-state';
 import { User } from '../models/user.model';
+import { Router } from '@angular/router';
 
 interface UserProps {
   users: User[];
@@ -20,7 +11,7 @@ interface UserProps {
 
 const userStore = createStore(
   { name: 'users' },
-  withProps<UserProps>({ users: [] }),
+  withProps<UserProps>({ users: [] })
 );
 
 export const persist = persistState(userStore, {
@@ -28,18 +19,45 @@ export const persist = persistState(userStore, {
   storage: localStorageStrategy,
 });
 
+export type UserUpdate = {
+  username: string;
+  bio: string;
+  email: string;
+  newPassword: string;
+  id: number;
+};
+
 @Injectable({
   providedIn: 'root',
 })
 export class UserRepository {
-
+  private readonly authRepository = inject(AuthRepository);
+  private readonly router = inject(Router);
   readonly store = userStore;
 
   addUser(user: User): void {
     const users = [...userStore.getValue().users, user];
-    userStore.update(s => ({
+    userStore.update((s) => ({
       ...s,
-      users
+      users,
     }));
+  }
+
+  updateUser(updateInfo: UserUpdate): void {
+    const userList = userStore.getValue().users;
+    const user = userList.find((x) => x.id === updateInfo.id);
+    if (!user) {
+      return;
+    }
+    user.username = updateInfo.username || user.username;
+    user.email = updateInfo.email || user.email;
+    user.bio = updateInfo.bio;
+    user.password = updateInfo.newPassword || user.password;
+    userStore.update((s) => ({
+      ...s,
+      users: userList,
+    }));
+    this.authRepository.updateAuthUserInfo(user);
+    this.router.navigate(['']);
   }
 }

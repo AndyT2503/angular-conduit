@@ -23,7 +23,7 @@ export const persist = persistState(authStore, {
 export class AuthRepository {
   readonly authUser$ = authStore.pipe(select(state => state.user));
 
-  login(user: AuthProps['user']): void {
+  updateAuthUserInfo(user: AuthProps['user']): void {
     authStore.update((state) => ({
       ...state,
       user

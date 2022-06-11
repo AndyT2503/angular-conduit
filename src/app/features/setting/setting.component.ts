@@ -1,5 +1,11 @@
+import { UserRepository } from 'src/app/core/state/user.repository';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -23,12 +29,12 @@ import { Router } from '@angular/router';
 export class SettingComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly authRepository = inject(AuthRepository);
-
+  private readonly userRepository = inject(UserRepository);
   settingForm!: FormGroup<{
     username: FormControl<string>;
-    bio: FormControl<string | null>;
+    bio: FormControl<string>;
     email: FormControl<string>;
-    newPassword: FormControl<string | null>;
+    newPassword: FormControl<string>;
     id: FormControl<number>;
   }>;
 
@@ -43,38 +49,50 @@ export class SettingComponent implements OnInit {
         filter((user) => !!user),
         untilDestroyed(this)
       )
-      .subscribe(
-        user => {
-          this.settingForm.patchValue({
-            bio: user?.bio,
-            email: user?.email,
-            id: user?.id,
-            username: user?.username
-          })
-        }
-      );
+      .subscribe((user) => {
+        this.settingForm.patchValue({
+          bio: user?.bio,
+          email: user?.email,
+          id: user?.id,
+          username: user?.username,
+        });
+      });
   }
 
   initForm(): void {
     this.settingForm = new FormGroup({
       username: new FormControl('', {
         nonNullable: true,
-        validators: Validators.required,
       }),
       id: new FormControl(0, {
         nonNullable: true,
         validators: Validators.required,
       }),
-      bio: new FormControl(''),
+      bio: new FormControl('', {
+        nonNullable: true,
+      }),
       email: new FormControl('', {
         nonNullable: true,
-        validators: Validators.required,
       }),
-      newPassword: new FormControl(''),
+      newPassword: new FormControl('', {
+        nonNullable: true,
+      }),
     });
   }
 
-  submit(): void {}
+  submit(): void {
+    if (this.settingForm.invalid) {
+      return;
+    }
+    const { bio, email, id, newPassword, username } = this.settingForm.value;
+    this.userRepository.updateUser({
+      bio: bio!,
+      email: email!,
+      id: id!,
+      newPassword: newPassword!,
+      username: username!,
+    });
+  }
 
   logout(): void {
     this.authRepository.logout();
