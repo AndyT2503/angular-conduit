@@ -7,5 +7,5 @@ export type Article = {
   tags: Array<string>;
   title: string;
   slug: string;
-  comments: Array<Comment>;
+  comments?: Array<Comment>;
 }

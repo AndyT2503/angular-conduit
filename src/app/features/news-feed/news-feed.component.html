@@ -2,6 +2,50 @@
   <h1 class="title">conduit</h1>
   <p class="description">A place to share your knowledge</p>
 </div>
-<div class="news-feed" [style.marginTop]="!(authUser$ | async) ? '232px' : ''">
-  asd
+<div
+  class="news-feed row"
+  [style.marginTop]="!(authUser$ | async) ? '232px' : ''"
+>
+  <div class="col-9">
+    <a class="tab">Global Feed</a>
+    <hr />
+    <ng-container *ngFor="let article of articles">
+      <div class="article-preview">
+        <div class="article-meta">
+          <img class="avatar" src="http://i.imgur.com/N4VcUeJ.jpg" />
+          <div class="info">
+            <a href="" class="author">{{ article.username }}</a>
+            <p class="date">{{ article.creationTime | date: "MMMM d, y" }}</p>
+          </div>
+          <button class="btn favorite-btn btn-sm ms-auto">
+            <i class="fa-solid fa-heart"></i> 32
+          </button>
+        </div>
+        <div class="preview-link">
+          <h1 class="title">
+            {{ article.title }}
+          </h1>
+          <p class="description">
+            {{ article.content  }}
+          </p>
+          <div class="footer">
+            <span class="read-more">Read more...</span>
+            <div class="tags">
+              <ng-container *ngFor="let tag of article.tags"
+                ><a class="tag-default">{{tag}}</a>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <div class="col-3 side-bar">
+    <p>Popular Tags</p>
+    <div>
+      <ng-container *ngFor="let tag of trendingTags">
+        <a class="tag-default trending-tag">{{ tag }}</a>
+      </ng-container>
+    </div>
+  </div>
 </div>

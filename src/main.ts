@@ -18,6 +18,7 @@ bootstrapApplication(AppComponent, {
     importProvidersFrom(
       RouterModule.forRoot(routes, {
         scrollPositionRestoration: 'top',
+        useHash: true
       }),
       HttpClientModule,
       BrowserAnimationsModule,
