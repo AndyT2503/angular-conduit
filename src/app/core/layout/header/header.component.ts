@@ -1,10 +1,10 @@
-import { CommonModule, UpperCasePipe } from '@angular/common';
+import { CommonModule, TitleCasePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   inject,
-  OnInit,
+  OnInit
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
@@ -22,7 +22,7 @@ type NavBarMenu = {
   imports: [CommonModule, RouterModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  providers: [UpperCasePipe],
+  providers: [TitleCasePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit {
@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit {
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly authRepository = inject(AuthRepository);
   private readonly titleService = inject(Title);
-  private readonly upperCasePipe = inject(UpperCasePipe);
+  private readonly titleCasePipe = inject(TitleCasePipe);
 
   indexActiveMenu = 0;
 
@@ -94,8 +94,8 @@ export class HeaderComponent implements OnInit {
             `${this.navBarMenus[this.indexActiveMenu].title} - Conduit`
           );
         } else {
-          const [, title] = currentUrl.split('/');
-          this.titleService.setTitle(`${this.upperCasePipe.transform(title)} - Conduit`);
+          const title = currentUrl.split('/').pop();
+          this.titleService.setTitle(`${this.titleCasePipe.transform(title)?.replaceAll('-', ' ')} - Conduit`);
         }
 
         this.cdr.markForCheck();

@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { Article } from './../../core/models/article.model';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { AuthRepository } from 'src/app/core/state/auth.repository';
@@ -15,7 +16,7 @@ import { ArticleRepository } from 'src/app/core/state/article.repository';
 @Component({
   selector: 'app-news-feed',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './news-feed.component.html',
   styleUrls: ['./news-feed.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

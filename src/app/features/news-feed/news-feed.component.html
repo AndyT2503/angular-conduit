@@ -21,7 +21,7 @@
             <i class="fa-solid fa-heart"></i> 32
           </button>
         </div>
-        <div class="preview-link">
+        <div [routerLink]="['/article', article.slug]" class="preview-link">
           <h1 class="title">
             {{ article.title }}
           </h1>

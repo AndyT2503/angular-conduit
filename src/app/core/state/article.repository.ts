@@ -22,6 +22,7 @@ export const persist = persistState(articleStore, {
   providedIn: 'root'
 })
 export class ArticleRepository {
+  readonly articleStore = articleStore;
   readonly articles$ = articleStore.pipe(select(state => state.articles));
 
 

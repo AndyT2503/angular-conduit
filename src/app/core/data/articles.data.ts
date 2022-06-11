@@ -14,16 +14,16 @@ export const GlobalArticles: Article[] = [
     content:
       'Over 100 implementations have been created using various languages, libraries, and frameworks.',
     creationTime: new Date(),
-    slug: 'Explore implementations',
+    slug: 'Explore-implementations',
     tags: ['implementations', 'codebaseShow'],
-    title: 'Create a new implementation',
+    title: 'Explore implementations',
     username: 'Gerome',
   },
   {
     content:
       'See how the exact same Medium.com clone (called Conduit) is built using different frontends and backends. Yes, you can mix and match them, because they all adhere to the same API spec',
     creationTime: new Date(),
-    slug: 'Explore implementations',
+    slug: 'Welcome-to-RealWorld-project',
     tags: ['welcome', 'introduction'],
     title: 'Welcome to RealWorld project',
     username: 'Gerome',
