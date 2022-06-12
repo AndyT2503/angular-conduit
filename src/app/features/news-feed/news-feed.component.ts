@@ -1,3 +1,4 @@
+import { TabToggleComponent } from './../../shared/components/tab-toggle/tab-toggle.component';
 import { RouterModule } from '@angular/router';
 import { Article } from './../../core/models/article.model';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -12,12 +13,13 @@ import {
 import { CommonModule } from '@angular/common';
 import { ArticleRepository } from 'src/app/core/state/article.repository';
 import { ArticleComponent } from 'src/app/shared/components/article/article.component';
+import { TabItem } from 'src/app/shared/components/tab-toggle/tab-toggle.component';
 
 @UntilDestroy()
 @Component({
   selector: 'app-news-feed',
   standalone: true,
-  imports: [CommonModule, RouterModule, ArticleComponent],
+  imports: [CommonModule, RouterModule, ArticleComponent, TabToggleComponent],
   templateUrl: './news-feed.component.html',
   styleUrls: ['./news-feed.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,6 +33,11 @@ export class NewsFeedComponent implements OnInit {
 
   trendingTags: string[] = [];
   articles: Article[] = [];
+
+  tabList: TabItem[] = [{
+    link: '',
+    title: 'Global Feed'
+  }];
   ngOnInit(): void {
     this.loadArticles();
   }

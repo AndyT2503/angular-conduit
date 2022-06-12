@@ -2,7 +2,7 @@
   <div class="article-meta">
     <img class="avatar" src="http://i.imgur.com/N4VcUeJ.jpg" />
     <div class="info">
-      <a href="" class="author">{{ article.username }}</a>
+      <a [routerLink]="'/@' + article.username" class="author">{{ article.username }}</a>
       <p class="date">{{ article.creationTime | date: "MMMM d, y" }}</p>
     </div>
     <button class="btn favorite-btn btn-sm ms-auto">

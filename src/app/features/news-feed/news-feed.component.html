@@ -7,8 +7,7 @@
   [style.marginTop]="!(authUser$ | async) ? '232px' : ''"
 >
   <div class="col-9">
-    <a class="tab">Global Feed</a>
-    <hr />
+    <app-tab-toggle [tabList]="tabList"></app-tab-toggle>
     <ng-container *ngFor="let article of articles">
       <app-article [article]="article"></app-article>
     </ng-container>
