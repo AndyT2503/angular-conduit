@@ -14,6 +14,7 @@ import { AuthRepository } from '../../state/auth.repository';
 type NavBarMenu = {
   url: string;
   title: string;
+  icon?: string;
 };
 
 @Component({
@@ -67,10 +68,12 @@ export class HeaderComponent implements OnInit {
           {
             url: 'editor',
             title: 'New Article',
+            icon: 'fa-solid fa-pen-to-square'
           },
           {
             url: 'settings',
             title: 'Settings',
+            icon: 'fa-solid fa-gear'
           },
           {
             url: `@${user.username}`,
