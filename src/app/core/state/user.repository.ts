@@ -5,7 +5,7 @@ import { localStorageStrategy, persistState } from '@ngneat/elf-persist-state';
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
 
-interface UserProps {
+type UserProps = {
   users: User[];
 }
 
@@ -49,6 +49,8 @@ export class UserRepository {
     if (!user) {
       return;
     }
+    const checkUsernameExist = userList.find((x) => x.username === updateInfo.username);
+    if (checkUsernameExist) return;
     user.username = updateInfo.username || user.username;
     user.email = updateInfo.email || user.email;
     user.bio = updateInfo.bio;

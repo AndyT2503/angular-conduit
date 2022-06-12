@@ -1,0 +1,26 @@
+<div class="banner">
+  <div class="container">
+    <div class="user-info">
+      <img class="avatar" src="http://i.imgur.com/N4VcUeJ.jpg" />
+      <h4 class="username">{{ user.username }}</h4>
+    </div>
+    <button
+      *ngIf="!isLoginUser"
+      class="btn btn-outline-secondary btn-sm ms-auto d-flex align-items-center"
+    >
+      <i class="fa-solid fa-plus me-1"></i> Follow {{ user.username }}
+    </button>
+    <button
+      *ngIf="isLoginUser"
+      class="btn btn-outline-secondary btn-sm ms-auto d-flex align-items-center"
+    >
+      <i class="fa-solid fa-gear me-1"></i> Edit Profile Settings
+    </button>
+  </div>
+</div>
+<div class="content">
+  <div class="offset-md-1">
+    <app-article-toggle [username]="user.username"></app-article-toggle>
+    <router-outlet></router-outlet>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<ng-container *ngIf="articleList.length !== 0; else noArticle">
+  <ng-container *ngFor="let article of articleList">
+    <app-article [article]="article"></app-article>
+  </ng-container>
+</ng-container>
+
+<ng-template #noArticle>
+  <div class="py-4">No articles are here... yet.</div>
+</ng-template>

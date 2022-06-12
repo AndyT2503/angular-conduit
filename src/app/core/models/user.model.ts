@@ -4,4 +4,5 @@ export type User = {
   password: string;
   id: number;
   bio?: string;
+  favoritedArticles?: Array<number>;
 }

@@ -9,6 +9,7 @@ export const GlobalArticles: Article[] = [
     tags: ['implementations'],
     title: 'Create a new implementation',
     username: 'Gerome',
+    id: 1
   },
   {
     content:
@@ -18,6 +19,7 @@ export const GlobalArticles: Article[] = [
     tags: ['implementations', 'codebaseShow'],
     title: 'Explore implementations',
     username: 'Gerome',
+    id: 2
   },
   {
     content:
@@ -27,5 +29,6 @@ export const GlobalArticles: Article[] = [
     tags: ['welcome', 'introduction'],
     title: 'Welcome to RealWorld project',
     username: 'Gerome',
+    id: 3
   },
 ];

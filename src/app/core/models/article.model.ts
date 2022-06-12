@@ -8,4 +8,5 @@ export type Article = {
   title: string;
   slug: string;
   comments?: Array<Comment>;
+  id: number;
 }

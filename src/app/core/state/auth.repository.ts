@@ -3,7 +3,7 @@ import { createStore, select, withProps } from "@ngneat/elf";
 import { localStorageStrategy, persistState } from "@ngneat/elf-persist-state";
 import { User } from "../models/user.model";
 
-interface AuthProps {
+type AuthProps = {
   user: User | null;
 }
 
@@ -21,6 +21,7 @@ export const persist = persistState(authStore, {
   providedIn: 'root'
 })
 export class AuthRepository {
+  readonly authStore = authStore;
   readonly authUser$ = authStore.pipe(select(state => state.user));
 
   updateAuthUserInfo(user: AuthProps['user']): void {

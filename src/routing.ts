@@ -32,8 +32,15 @@ export const routes: Routes = [
   {
     path: 'article/:slug',
     loadComponent: () =>
-      import('./app/features/article/article-detail.component').then(
+      import('./app/features/article-detail/article-detail.component').then(
         (x) => x.ArticleDetailComponent
+      ),
+  },
+  {
+    path: ':username',
+    loadChildren: () =>
+      import('./app/features/profile/profile.route').then(
+        (m) => m.profileRoutes
       ),
   },
 ];
