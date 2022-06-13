@@ -5,6 +5,14 @@ import { localStorageStrategy, persistState } from '@ngneat/elf-persist-state';
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
 
+export type UserUpdate = {
+  username: string;
+  bio: string;
+  email: string;
+  newPassword: string;
+  id: number;
+};
+
 type UserProps = {
   users: User[];
 }
@@ -14,18 +22,10 @@ const userStore = createStore(
   withProps<UserProps>({ users: [] })
 );
 
-export const persist = persistState(userStore, {
+persistState(userStore, {
   key: 'users',
   storage: localStorageStrategy,
 });
-
-export type UserUpdate = {
-  username: string;
-  bio: string;
-  email: string;
-  newPassword: string;
-  id: number;
-};
 
 @Injectable({
   providedIn: 'root',

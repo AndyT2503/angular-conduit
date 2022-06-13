@@ -9,7 +9,8 @@ export const GlobalArticles: Article[] = [
     tags: ['implementations'],
     title: 'Create a new implementation',
     username: 'Gerome',
-    id: 1
+    id: 1,
+    description: 'Share your knowledge and enpower the community by creating a new implementation'
   },
   {
     content:
@@ -19,7 +20,8 @@ export const GlobalArticles: Article[] = [
     tags: ['implementations', 'codebaseShow'],
     title: 'Explore implementations',
     username: 'Gerome',
-    id: 2
+    id: 2,
+    description: 'Over 100 implementations have been created using various languages, libraries, and frameworks.'
   },
   {
     content:
@@ -29,6 +31,7 @@ export const GlobalArticles: Article[] = [
     tags: ['welcome', 'introduction'],
     title: 'Welcome to RealWorld project',
     username: 'Gerome',
-    id: 3
+    id: 3,
+    description: 'Exemplary fullstack Medium.com clone powered by React, Angular, Node, Django, and many more'
   },
 ];

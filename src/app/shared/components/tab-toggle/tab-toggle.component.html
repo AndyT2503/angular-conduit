@@ -1,17 +1,26 @@
 <div class="toggle">
-  <ul
-    class="nav nav-pills outline-active"
-  >
-    <ng-container *ngFor="let tab of tabList">
+  <ul class="nav nav-pills outline-active">
+    <ng-container *ngFor="let tab of _tabList">
       <li class="nav-item">
-        <a
-          [routerLink]="[tab.link]"
-          class="nav-link"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          (isActiveChange)="tabActiveChange($event, tab)"
-          >{{tab.title}}</a
-        >
+        <ng-container *ngIf="tabType === TabType.Link; else noneLink">
+          <a
+            [routerLink]="[tab.link]"
+            class="nav-link"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (isActiveChange)="tabActiveChange($event, tab)"
+            >{{ tab.title }}</a
+          >
+        </ng-container>
+        <ng-template #noneLink>
+          <a
+            class="nav-link cursor-pointer"
+            *ngIf="(activeTabTitle$ | async) as activeTabTitle"
+            [ngClass]="{'active': activeTabTitle === tab.title}"
+            (click)="onClickTabNoneLink(activeTabTitle === tab.title, tab)"
+            >{{ tab.title }}</a
+          >
+        </ng-template>
       </li>
     </ng-container>
   </ul>

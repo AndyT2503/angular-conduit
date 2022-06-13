@@ -14,12 +14,19 @@ import { CommonModule } from '@angular/common';
 import { ArticleRepository } from 'src/app/core/state/article.repository';
 import { ArticleComponent } from 'src/app/shared/components/article/article.component';
 import { TabItem } from 'src/app/shared/components/tab-toggle/tab-toggle.component';
+import { take } from 'rxjs';
+import { ArticleListComponent } from 'src/app/shared/components/article-list/article-list.component';
 
 @UntilDestroy()
 @Component({
   selector: 'app-news-feed',
   standalone: true,
-  imports: [CommonModule, RouterModule, ArticleComponent, TabToggleComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ArticleListComponent,
+    TabToggleComponent,
+  ],
   templateUrl: './news-feed.component.html',
   styleUrls: ['./news-feed.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,29 +41,101 @@ export class NewsFeedComponent implements OnInit {
   trendingTags: string[] = [];
   articles: Article[] = [];
 
-  tabList: TabItem[] = [{
-    link: '',
-    title: 'Global Feed'
-  }];
+  defaultTabList: TabItem[] = [];
+
+  tabList: TabItem[] = [];
+  activeTabTitle!: string;
   ngOnInit(): void {
-    this.loadArticles();
+    this.loadDefaultTabList();
+    this.loadTrendingTag();
+    if (this.authRepository.authStore.getValue().user) {
+      this.loadArticleOfCurrentUser();
+    } else {
+      this.loadGlobalArticles();
+    }
   }
 
-  private loadArticles(): void {
-    this.articles$.pipe(untilDestroyed(this)).subscribe((articles) => {
+  private loadArticleOfCurrentUser(): void {
+    this.articleRepository
+      .getArticleByUser(
+        this.authRepository.authStore.getValue().user?.username!
+      )
+      .pipe(take(1))
+      .subscribe((res) => (this.articles = res!));
+  }
+
+  private loadDefaultTabList(): void {
+    this.authRepository.isAuthenticated$
+      .pipe(untilDestroyed(this))
+      .subscribe((isAuth) => {
+        if (isAuth) {
+          this.defaultTabList = [
+            {
+              title: 'Your Feed',
+            },
+            {
+              title: 'Global Feed',
+            },
+          ];
+        } else {
+          this.defaultTabList = [
+            {
+              title: 'Global Feed',
+            },
+          ];
+        }
+        this.tabList = [...this.defaultTabList];
+        this.activeTabTitle = this.tabList[0].title;
+      });
+  }
+
+  private loadGlobalArticles(): void {
+    this.articles$.pipe(take(1)).subscribe((articles) => {
       this.articles = articles!;
-      this.loadTrendingTag(articles!);
       this.cdr.markForCheck();
     });
   }
 
-  private loadTrendingTag(articles: Article[]): void {
-    const tags = articles.flatMap((x) => x.tags);
-    const timesTagDuplicated = [...new Set(tags)].map((x) => ({
-      value: x,
-      times: tags!.filter((i) => i === x).length,
-    }));
-    timesTagDuplicated.sort((a, b) => b.times - a.times);
-    this.trendingTags = timesTagDuplicated.slice(0, 4).map((x) => x.value);
+  private loadTrendingTag(): void {
+    this.articles$.pipe(take(1)).subscribe((articles) => {
+      const tags = articles?.flatMap((x) => x.tags);
+      const timesTagDuplicated = [...new Set(tags)].map((x) => ({
+        value: x,
+        times: tags!.filter((i) => i === x).length,
+      }));
+      timesTagDuplicated.sort((a, b) => b.times - a.times);
+      this.trendingTags = timesTagDuplicated.slice(0, 4).map((x) => x.value);
+      this.cdr.markForCheck();
+    });
+  }
+
+  selectTag(tag: string): void {
+    const tagTitle = `# ${tag}`;
+    this.tabList = [
+      ...this.defaultTabList,
+      {
+        title: tagTitle,
+      },
+    ];
+    this.activeTabTitle = tagTitle;
+    this.articleRepository
+      .loadArticleByTag(tag)
+      .pipe(take(1))
+      .subscribe((articles) => {
+        this.articles = articles!;
+        this.cdr.markForCheck();
+      });
+  }
+
+  onTabChange(tab: TabItem): void {
+    if (this.defaultTabList.some((x) => x.title === tab.title)) {
+      this.tabList = [...this.defaultTabList];
+      if (tab.title === 'Global Feed') {
+        this.loadGlobalArticles();
+      }
+      if (tab.title === 'Your Feed') {
+        this.loadArticleOfCurrentUser();
+      }
+    }
   }
 }

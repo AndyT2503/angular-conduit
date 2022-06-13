@@ -1,27 +1,28 @@
 import { CommonModule } from '@angular/common';
 import {
-  ChangeDetectionStrategy, Component,
+  ChangeDetectionStrategy,
+  Component,
   inject,
-  OnInit
+  OnInit,
 } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filter, switchMap } from 'rxjs';
 import { Article } from 'src/app/core/models/article.model';
 import { ArticleRepository } from 'src/app/core/state/article.repository';
-import { ArticleComponent } from 'src/app/shared/components/article/article.component';
-import { ProfileRepository } from './../../state/profile.repository';
-import { ARTICLE_TYPE } from './article-list.di';
+import { ArticleListComponent } from 'src/app/shared/components/article-list/article-list.component';
+import { ProfileRepository } from '../../state/profile.repository';
+import { ARTICLE_TYPE } from './profile-article-list.di';
 
 @UntilDestroy()
 @Component({
-  selector: 'app-article-list',
+  selector: 'app-profile-article-list',
   standalone: true,
-  imports: [CommonModule, ArticleComponent],
-  templateUrl: './article-list.component.html',
-  styleUrls: ['./article-list.component.scss'],
+  imports: [CommonModule, ArticleListComponent],
+  templateUrl: './profile-article-list.component.html',
+  styleUrls: ['./profile-article-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ArticleListComponent implements OnInit {
+export class ProfileArticleListComponent implements OnInit {
   private readonly articleType = inject(ARTICLE_TYPE);
   private readonly articleRepository = inject(ArticleRepository);
   private readonly profileRepository = inject(ProfileRepository);

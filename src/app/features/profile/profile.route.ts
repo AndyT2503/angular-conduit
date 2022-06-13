@@ -1,5 +1,5 @@
 import { ProfileRepository } from './state/profile.repository';
-import { ArticleType, providerArticleType } from './components/article-list/article-list.di';
+import { ArticleType, providerArticleType } from './components/profile-article-list/profile-article-list.di';
 import { Route } from '@angular/router';
 
 export const profileRoutes: Route[] = [
@@ -13,16 +13,16 @@ export const profileRoutes: Route[] = [
         path: '',
         providers: providerArticleType(ArticleType.MyArticle),
         loadComponent: () =>
-          import('./components/article-list/article-list.component').then(
-            (c) => c.ArticleListComponent
+          import('./components/profile-article-list/profile-article-list.component').then(
+            (c) => c.ProfileArticleListComponent
           ),
       },
       {
         path: 'favorites',
         providers: providerArticleType(ArticleType.FavoritedArticle),
         loadComponent: () =>
-          import('./components/article-list/article-list.component').then(
-            (c) => c.ArticleListComponent
+          import('./components/profile-article-list/profile-article-list.component').then(
+            (c) => c.ProfileArticleListComponent
           ),
       },
     ],

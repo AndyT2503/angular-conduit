@@ -8,8 +8,10 @@ export enum ArticleType {
 }
 
 export const providerArticleType = (type: ArticleType) => {
-  return [{
-    provide: ARTICLE_TYPE,
-    useValue: type,
-  }];
+  return [
+    {
+      provide: ARTICLE_TYPE,
+      useValue: type,
+    },
+  ];
 };
