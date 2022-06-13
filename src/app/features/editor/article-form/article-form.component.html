@@ -1,0 +1,30 @@
+<form [formGroup]="articleForm" class="article-form">
+  <p *ngIf="articleError" class="error">{{ articleError }}</p>
+  <input
+    type="text"
+    formControlName="title"
+    class="form-control form-control-lg"
+    placeholder="Article Title"
+  />
+  <input
+    type="text"
+    formControlName="description"
+    class="form-control"
+    placeholder="What's this article about"
+  />
+  <textarea
+    formControlName="content"
+    rows="6"
+    class="form-control form-control-lg"
+    placeholder="Write your article (in markdown)"
+  ></textarea>
+  <input
+    type="text"
+    formControlName="tags"
+    class="form-control"
+    placeholder="Enter tags"
+  />
+  <button type="button" (click)="submit()" class="btn submit-btn btn-lg">
+    Publish Article
+  </button>
+</form>

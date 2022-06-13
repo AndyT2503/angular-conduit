@@ -23,17 +23,22 @@ export const routes: Routes = [
       ),
   },
   {
-    path: '',
-    loadComponent: () =>
-      import('./app/features/news-feed/news-feed.component').then(
-        (c) => c.NewsFeedComponent
-      ),
-  },
-  {
     path: 'article/:slug',
     loadComponent: () =>
       import('./app/features/article-detail/article-detail.component').then(
         (x) => x.ArticleDetailComponent
+      ),
+  },
+  {
+    path: 'editor',
+    loadChildren: () =>
+      import('./app/features/editor/editor.route').then((m) => m.editorRoutes),
+  },
+  {
+    path: '',
+    loadComponent: () =>
+      import('./app/features/news-feed/news-feed.component').then(
+        (c) => c.NewsFeedComponent
       ),
   },
   {
