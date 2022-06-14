@@ -2,8 +2,13 @@
   <a routerLink="" class="logo">conduit</a>
   <ul class="nav-bar">
     <ng-container *ngFor="let item of navBarMenus; let idx = index">
-      <li [routerLink]="item.url" [ngClass]="{'active': indexActiveMenu === idx }"><i [class]="item.icon + ' me-1'"></i>{{item.title}}</li>
+      <li
+        [routerLink]="item.url"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <i [class]="item.icon + ' me-1'"></i>{{ item.title }}
+      </li>
     </ng-container>
   </ul>
 </header>
-

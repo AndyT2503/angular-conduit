@@ -57,6 +57,15 @@ export class ArticleRepository {
     );
   }
 
+  loadArticleBySlug(slug: string) {
+    return this.articles$.pipe(
+      switchMap((res) => {
+        const article = res?.find((x) => x.slug === slug);
+        return of(article || ({} as Article));
+      })
+    );
+  }
+
   loadArticleByTag(tag: string) {
     return this.articles$.pipe(
       switchMap((res) =>
@@ -98,5 +107,21 @@ export class ArticleRepository {
       ...state,
       articles: articleList,
     }));
+  }
+
+  updateArticle(id: number, article: ArticleFormData) {
+    const { articles } = this.articleStore.getValue();
+    const oldArticle = articles?.find((x) => x.id === id);
+    if (!oldArticle) return;
+    oldArticle.content = article.content;
+    oldArticle.description = article.description;
+    oldArticle.slug = article.title.replaceAll(' ', '-');
+    oldArticle.tags = article.tags;
+    oldArticle.title = article.title;
+    this.articleStore.update((state) => ({
+      ...state,
+      articles,
+    }));
+    return oldArticle;
   }
 }

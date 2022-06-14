@@ -2,18 +2,28 @@
   <div class="container">
     <h1 class="title">{{ article.title }}</h1>
     <div class="article-meta">
-      <img class="avatar" src="http://i.imgur.com/N4VcUeJ.jpg" />
+      <img class="avatar" src="assets/img/avatar.jpg" />
       <div class="info">
         <a href="" class="author">{{ author.username }}</a>
         <p class="date">{{ article.creationTime | date: "MMMM d, y" }}</p>
       </div>
       <div class="group-btn">
-        <button class="btn btn-outline-secondary btn-sm">
-          <i class="fa-solid fa-plus"></i> Follow {{ author.username }}
-        </button>
-        <button class="btn favorite-btn btn-sm">
-          <i class="fa-solid fa-heart"></i> Favorite Article (2667)
-        </button>
+        <ng-container *ngIf="(authUser$ | async)!.id !== author.id; else editTmp">
+          <button class="btn btn-outline-secondary btn-sm">
+            <i class="fa-solid fa-plus"></i> Follow {{ author.username }}
+          </button>
+          <button class="btn favorite-btn btn-sm">
+            <i class="fa-solid fa-heart"></i> Favorite Article (2667)
+          </button>
+        </ng-container>
+        <ng-template #editTmp>
+          <button class="btn btn-outline-secondary btn-sm" [routerLink]="['/editor', article.slug]">
+            <i class="fa-solid fa-pen"></i> Edit Article
+          </button>
+          <button class="btn btn-outline-danger btn-sm">
+            <i class="fa-solid fa-trash-can"></i> Favorite Article (2667)
+          </button>
+        </ng-template>
       </div>
     </div>
   </div>
@@ -22,8 +32,8 @@
   <p class="article-content">{{ article.content }}</p>
   <div class="tags">
     <ng-container *ngFor="let tag of article.tags"
-      ><a class="tag-default">{{tag}}</a>
+      ><a class="tag-default">{{ tag }}</a>
     </ng-container>
   </div>
 </div>
-<hr class="mt-5">
+<hr class="mt-5" />

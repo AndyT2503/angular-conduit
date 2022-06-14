@@ -18,12 +18,27 @@
     class="form-control form-control-lg"
     placeholder="Write your article (in markdown)"
   ></textarea>
-  <input
-    type="text"
-    formControlName="tags"
-    class="form-control"
-    placeholder="Enter tags"
-  />
+  <div class="form-group">
+    <input
+      type="text"
+      [(ngModel)]="tag"
+      [ngModelOptions]="{ standalone: true }"
+      (keyup.enter)="addTag()"
+      class="form-control"
+      placeholder="Enter tags"
+    />
+    <div class="tag-list">
+      <ng-container *ngFor="let item of tagList; let i = index">
+        <div class="tag-default tag-pill">
+          <i
+            class="fa-solid fa-xmark me-1 remove-icon"
+            (click)="removeTag(i)"
+          ></i
+          >{{ item }}
+        </div>
+      </ng-container>
+    </div>
+  </div>
   <button type="button" (click)="submit()" class="btn submit-btn btn-lg">
     Publish Article
   </button>

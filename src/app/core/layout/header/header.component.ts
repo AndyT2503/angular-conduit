@@ -33,7 +33,6 @@ export class HeaderComponent implements OnInit {
   private readonly titleService = inject(Title);
   private readonly titleCasePipe = inject(TitleCasePipe);
 
-  indexActiveMenu = 0;
 
   navBarMenus: NavBarMenu[] = [];
 
@@ -89,12 +88,12 @@ export class HeaderComponent implements OnInit {
       .pipe(filter((val) => val instanceof NavigationEnd))
       .subscribe((res) => {
         const currentUrl = (res as NavigationEnd).url;
-        this.indexActiveMenu = this.navBarMenus.findIndex(
+        const indexActiveMenu = this.navBarMenus.findIndex(
           (x) => currentUrl == `/${x.url}`
         );
-        if (this.indexActiveMenu !== -1) {
+        if (indexActiveMenu !== -1) {
           this.titleService.setTitle(
-            `${this.navBarMenus[this.indexActiveMenu].title} - Conduit`
+            `${this.navBarMenus[indexActiveMenu].title} - Conduit`
           );
         } else {
           const title = currentUrl.split('/').pop();

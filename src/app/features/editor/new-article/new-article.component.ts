@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ArticleFormData, ArticleRepository } from 'src/app/core/state/article.repository';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ArticleFormComponent } from '../article-form/article-form.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-article',
@@ -10,11 +12,12 @@ import { ArticleFormComponent } from '../article-form/article-form.component';
   styleUrls: ['./new-article.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewArticleComponent implements OnInit {
+export class NewArticleComponent {
+  readonly articleRepository = inject(ArticleRepository);
+  readonly router = inject(Router);
 
-  constructor() { }
-
-  ngOnInit(): void {
+  submit(article: ArticleFormData): void {
+    this.articleRepository.createNewArticle(article);
+    this.router.navigate(['']);
   }
-
 }
