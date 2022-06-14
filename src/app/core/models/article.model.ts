@@ -1,7 +1,7 @@
 import { Comment } from "./comment.model";
 
 export type Article = {
-  username: string;
+  userId: number;
   creationTime: Date;
   content: string;
   description: string;

@@ -1,4 +1,5 @@
-import { UserRepository } from 'src/app/core/state/user.repository';
+import { TypedFormGroup } from './../../shared/utils/typed-form';
+import { UserRepository, UserUpdateFormData } from 'src/app/core/state/user.repository';
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -30,13 +31,7 @@ export class SettingComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly authRepository = inject(AuthRepository);
   private readonly userRepository = inject(UserRepository);
-  settingForm!: FormGroup<{
-    username: FormControl<string>;
-    bio: FormControl<string>;
-    email: FormControl<string>;
-    newPassword: FormControl<string>;
-    id: FormControl<number>;
-  }>;
+  settingForm!: TypedFormGroup<UserUpdateFormData>;
 
   ngOnInit(): void {
     this.initForm();

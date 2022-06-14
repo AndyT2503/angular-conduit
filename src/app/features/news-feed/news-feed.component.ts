@@ -58,7 +58,7 @@ export class NewsFeedComponent implements OnInit {
   private loadArticleOfCurrentUser(): void {
     this.articleRepository
       .getArticleByUser(
-        this.authRepository.authStore.getValue().user?.username!
+        this.authRepository.authStore.getValue().user?.id!
       )
       .pipe(take(1))
       .subscribe((res) => (this.articles = res!));

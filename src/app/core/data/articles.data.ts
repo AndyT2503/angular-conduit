@@ -8,7 +8,7 @@ export const GlobalArticles: Article[] = [
     slug: 'Create-a-new-implementation',
     tags: ['implementations'],
     title: 'Create a new implementation',
-    username: 'Gerome',
+    userId: 1,
     id: 1,
     description: 'Share your knowledge and enpower the community by creating a new implementation'
   },
@@ -19,7 +19,7 @@ export const GlobalArticles: Article[] = [
     slug: 'Explore-implementations',
     tags: ['implementations', 'codebaseShow'],
     title: 'Explore implementations',
-    username: 'Gerome',
+    userId: 1,
     id: 2,
     description: 'Over 100 implementations have been created using various languages, libraries, and frameworks.'
   },
@@ -30,7 +30,7 @@ export const GlobalArticles: Article[] = [
     slug: 'Welcome-to-RealWorld-project',
     tags: ['welcome', 'introduction'],
     title: 'Welcome to RealWorld project',
-    username: 'Gerome',
+    userId: 1,
     id: 3,
     description: 'Exemplary fullstack Medium.com clone powered by React, Angular, Node, Django, and many more'
   },

@@ -1,3 +1,4 @@
+import { TypedFormGroup } from './../../shared/utils/typed-form';
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -14,7 +15,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthRepository } from 'src/app/core/state/auth.repository';
-import { UserRepository } from 'src/app/core/state/user.repository';
+import { UserCreateFormData, UserRepository } from 'src/app/core/state/user.repository';
 
 @Component({
   selector: 'app-sign-up',
@@ -30,11 +31,7 @@ export class SignUpComponent implements OnInit {
   private readonly authRepository = inject(AuthRepository);
   private readonly userRepository = inject(UserRepository);
 
-  registerForm!: FormGroup<{
-    email: FormControl<string>;
-    password: FormControl<string>;
-    username: FormControl<string>;
-  }>;
+  registerForm!: TypedFormGroup<UserCreateFormData>;
   registerError = '';
 
   ngOnInit(): void {
@@ -77,14 +74,12 @@ export class SignUpComponent implements OnInit {
       this.registerError = 'user has been existed';
       return;
     }
-    const user = {
+    const newUser = this.userRepository.addUser({
       email: email!,
       password: password!,
       username: username!,
-      id: Math.random(),
-    };
-    this.userRepository.addUser(user);
-    this.authRepository.updateAuthUserInfo(user);
+    });
+    this.authRepository.updateAuthUserInfo(newUser);
     this.router.navigate(['']);
   }
 }

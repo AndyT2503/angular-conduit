@@ -1,3 +1,4 @@
+import { TypedFormGroup } from './../../shared/utils/typed-form';
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -16,6 +17,11 @@ import { Router, RouterModule } from '@angular/router';
 import { AuthRepository } from 'src/app/core/state/auth.repository';
 import { UserRepository } from 'src/app/core/state/user.repository';
 
+type SignInFormData = {
+  email: string;
+  password: string;
+}
+
 @Component({
   selector: 'app-sign-in',
   standalone: true,
@@ -30,10 +36,7 @@ export class SignInComponent implements OnInit {
   private readonly authRepository = inject(AuthRepository);
   private readonly userRepository = inject(UserRepository);
 
-  loginForm!: FormGroup<{
-    email: FormControl<string>;
-    password: FormControl<string>;
-  }>;
+  loginForm!: TypedFormGroup<SignInFormData>;
   loginError = '';
 
   ngOnInit(): void {
