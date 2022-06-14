@@ -7,15 +7,23 @@
   [style.marginTop]="!(authUser$ | async) ? '232px' : ''"
 >
   <div class="col-9">
-    <app-tab-toggle (onTabChange)="onTabChange($event)" [(activeTabTitle)]="activeTabTitle" [tabList]="tabList"></app-tab-toggle>
+    <app-tab-toggle
+      (onTabChange)="onTabChange($event)"
+      [(activeTabTitle)]="activeTabTitle"
+      [tabList]="tabList"
+    ></app-tab-toggle>
     <app-article-list [articleList]="articles"></app-article-list>
   </div>
-  <div class="col-3 side-bar">
-    <p>Popular Tags</p>
-    <div>
-      <ng-container *ngFor="let tag of trendingTags">
-        <a (click)="selectTag(tag)" class="tag-default trending-tag">{{ tag }}</a>
-      </ng-container>
+  <div class="col-3">
+    <div class="side-bar">
+      <p>Popular Tags</p>
+      <div>
+        <ng-container *ngFor="let tag of trendingTags">
+          <a (click)="selectTag(tag)" class="tag-default trending-tag">{{
+            tag
+          }}</a>
+        </ng-container>
+      </div>
     </div>
   </div>
 </div>
