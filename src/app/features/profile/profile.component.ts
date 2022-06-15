@@ -46,7 +46,7 @@ export class ProfileComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe((params) => {
         const usernameParams = params['username'] as string;
-        this.title.setTitle(usernameParams);
+        this.title.setTitle(`${usernameParams} - Conduit`);
         const username = usernameParams.replace('@', '');
         const user = this.userRepository.store
           .getValue()
