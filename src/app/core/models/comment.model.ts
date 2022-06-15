@@ -1,5 +1,7 @@
 export type Comment = {
   content: string;
-  username: string;
+  userId: number;
   creationTime: Date;
+  id: number;
+  articleId: number;
 }

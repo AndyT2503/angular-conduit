@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { createStore, select, withProps } from '@ngneat/elf';
 import { localStorageStrategy, persistState } from '@ngneat/elf-persist-state';
-import { defer, of, switchMap } from 'rxjs';
+import { defer, Observable, of, switchMap } from 'rxjs';
 import { ArticleType } from 'src/app/features/profile/components/profile-article-list/profile-article-list.di';
 import { GlobalArticles } from '../data/articles.data';
 import { Article } from '../models/article.model';
@@ -16,12 +16,16 @@ export type ArticleFormData = {
 };
 
 type ArticleProps = {
+  lastId: number;
   articles: Article[] | null;
 };
 
 const articleStore = createStore(
   { name: 'article' },
-  withProps<ArticleProps>({ articles: GlobalArticles })
+  withProps<ArticleProps>({
+    articles: GlobalArticles,
+    lastId: GlobalArticles[GlobalArticles.length - 1].id,
+  })
 );
 
 persistState(articleStore, {
@@ -37,7 +41,7 @@ export class ArticleRepository {
   readonly articles$ = articleStore.pipe(select((state) => state.articles));
   private readonly authRepository = inject(AuthRepository);
 
-  loadArticleByType(type: ArticleType, user: User) {
+  loadArticleByType(type: ArticleType, user: User): Observable<Article[]> {
     return this.articles$.pipe(
       switchMap((res) =>
         defer(() => {
@@ -57,7 +61,7 @@ export class ArticleRepository {
     );
   }
 
-  loadArticleBySlug(slug: string) {
+  loadArticleBySlug(slug: string): Observable<Article> {
     return this.articles$.pipe(
       switchMap((res) => {
         const article = res?.find((x) => x.slug === slug);
@@ -66,7 +70,7 @@ export class ArticleRepository {
     );
   }
 
-  loadArticleByTag(tag: string) {
+  loadArticleByTag(tag: string): Observable<Article[] | null> {
     return this.articles$.pipe(
       switchMap((res) =>
         defer(() => {
@@ -83,39 +87,42 @@ export class ArticleRepository {
     );
   }
 
-  getArticleByUser(userId: number) {
+  getArticleByUser(userId: number): Observable<Article[] | undefined> {
     return this.articles$.pipe(
       switchMap((res) => of(res?.filter((x) => x.userId === userId)))
     );
   }
 
-  createNewArticle(article: ArticleFormData) {
+  createNewArticle(article: ArticleFormData): void {
     const userAuth = this.authRepository.authStore.getValue().user;
+    let { lastId, articles } = articleStore.getValue();
+    const newId = ++lastId;
     const newArticle: Article = {
       content: article.content,
       creationTime: new Date(),
       description: article.description,
-      slug: article.title.replaceAll(' ', '-'),
+      slug: this.generateSlug(article.title, newId),
       tags: article.tags,
       title: article.title,
       userId: userAuth?.id!,
-      id: Math.random(),
+      id: newId,
     };
 
-    const articleList = [...this.articleStore.getValue().articles!, newArticle];
+    const articleList = [...articles!, newArticle];
     this.articleStore.update((state) => ({
       ...state,
       articles: articleList,
+      lastId,
     }));
   }
 
-  updateArticle(id: number, article: ArticleFormData) {
+  updateArticle(id: number, article: ArticleFormData): Article | undefined {
     const { articles } = this.articleStore.getValue();
     const oldArticle = articles?.find((x) => x.id === id);
     if (!oldArticle) return;
     oldArticle.content = article.content;
     oldArticle.description = article.description;
-    oldArticle.slug = article.title.replaceAll(' ', '-');
+    oldArticle.slug = this.generateSlug(article.title, id);
     oldArticle.tags = article.tags;
     oldArticle.title = article.title;
     this.articleStore.update((state) => ({
@@ -123,5 +130,18 @@ export class ArticleRepository {
       articles,
     }));
     return oldArticle;
+  }
+
+  deleteArticle(id: number): void {
+    const { articles } = this.articleStore.getValue();
+    const newArticles = articles!.filter((x) => x.id !== id);
+    this.articleStore.update((state) => ({
+      ...state,
+      articles: newArticles,
+    }));
+  }
+
+  private generateSlug(title: string, id: number): string {
+    return `${title.replaceAll(' ', '-')}-${id}`;
   }
 }

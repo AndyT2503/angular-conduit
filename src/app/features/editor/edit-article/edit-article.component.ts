@@ -52,7 +52,7 @@ export class EditArticleComponent implements OnInit {
       this.article.id,
       article
     );
-    console.log(oldArticle)
-    this.router.navigate(['/article', oldArticle?.slug]);
+    if (!oldArticle) return;
+    this.router.navigate(['/article', oldArticle.slug]);
   }
 }

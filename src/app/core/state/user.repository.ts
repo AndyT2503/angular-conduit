@@ -1,4 +1,4 @@
-import { of, switchMap } from 'rxjs';
+import { of, switchMap, Observable } from 'rxjs';
 import { AuthRepository } from './auth.repository';
 import { inject, Injectable } from '@angular/core';
 import { createStore, select, withProps } from '@ngneat/elf';
@@ -58,7 +58,7 @@ export class UserRepository {
     return newUser;
   }
 
-  getUserById(id: number) {
+  getUserById(id: number): Observable<User> {
     return this.store.pipe(
       select((state) => state.users),
       switchMap((users) => of(users.find((x) => x.id === id) || ({} as User)))

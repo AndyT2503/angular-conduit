@@ -1,31 +1,10 @@
 <div class="banner">
   <div class="container">
     <h1 class="title">{{ article.title }}</h1>
-    <div class="article-meta">
-      <img class="avatar" src="assets/img/avatar.jpg" />
-      <div class="info">
-        <a href="" class="author">{{ author.username }}</a>
-        <p class="date">{{ article.creationTime | date: "MMMM d, y" }}</p>
-      </div>
-      <div class="group-btn">
-        <ng-container *ngIf="(authUser$ | async)!.id !== author.id; else editTmp">
-          <button class="btn btn-outline-secondary btn-sm">
-            <i class="fa-solid fa-plus"></i> Follow {{ author.username }}
-          </button>
-          <button class="btn favorite-btn btn-sm">
-            <i class="fa-solid fa-heart"></i> Favorite Article (2667)
-          </button>
-        </ng-container>
-        <ng-template #editTmp>
-          <button class="btn btn-outline-secondary btn-sm" [routerLink]="['/editor', article.slug]">
-            <i class="fa-solid fa-pen"></i> Edit Article
-          </button>
-          <button class="btn btn-outline-danger btn-sm">
-            <i class="fa-solid fa-trash-can"></i> Favorite Article (2667)
-          </button>
-        </ng-template>
-      </div>
-    </div>
+    <ng-container
+      [ngTemplateOutlet]="articleMeta"
+      [ngTemplateOutletContext]="{ type: 'header' }"
+    ></ng-container>
   </div>
 </div>
 <div class="content">
@@ -37,3 +16,63 @@
   </div>
 </div>
 <hr class="mt-5" />
+<div class="mt-4 mb-5 d-flex justify-content-center">
+  <ng-container
+    [ngTemplateOutlet]="articleMeta"
+    [ngTemplateOutletContext]="{ type: 'body' }"
+  ></ng-container>
+</div>
+<div class="row">
+  <div class="col-xs-12 col-md-8 offset-md-2">
+    <app-comment-form
+      *ngIf="isAuthenticated$ | async; else requireLogin"
+      [articleId]="article.id"
+    ></app-comment-form>
+    <ng-template #requireLogin>
+      <p>
+        <a class="link" routerLink="/login">Sign in</a> or <a class="link" routerLink="/register">sign up</a> to add comments on this
+        article.
+      </p>
+    </ng-template>
+    <app-comment-list [articleId]="article.id"></app-comment-list>
+  </div>
+</div>
+
+<ng-template #articleMeta let-type="type">
+  <div class="article-meta">
+    <img class="avatar" src="assets/img/avatar.jpg" />
+    <div class="info">
+      <a
+        [routerLink]="['/@' + author.username]"
+        class="author"
+        [style.color]="type === 'header' ? '#fff' : '#5CB85C'"
+        >{{ author.username }}</a
+      >
+      <p class="date">{{ article.creationTime | date: "MMMM d, y" }}</p>
+    </div>
+    <div class="group-btn">
+      <ng-container *ngIf="(authUser$ | async)?.id !== author.id; else editTmp">
+        <button class="btn btn-outline-secondary btn-sm">
+          <i class="fa-solid fa-plus"></i> Follow {{ author.username }}
+        </button>
+        <button class="btn favorite-btn btn-sm">
+          <i class="fa-solid fa-heart"></i> Favorite Article (2667)
+        </button>
+      </ng-container>
+      <ng-template #editTmp>
+        <button
+          class="btn btn-outline-secondary btn-sm"
+          [routerLink]="['/editor', article.slug]"
+        >
+          <i class="fa-solid fa-pen"></i> Edit Article
+        </button>
+        <button
+          class="btn btn-outline-danger btn-sm"
+          (click)="deleteArticle(article.id)"
+        >
+          <i class="fa-solid fa-trash-can"></i> Delete Article
+        </button>
+      </ng-template>
+    </div>
+  </div>
+</ng-template>

@@ -1,4 +1,3 @@
-import { Comment } from "./comment.model";
 
 export type Article = {
   userId: number;
@@ -8,6 +7,5 @@ export type Article = {
   tags: Array<string>;
   title: string;
   slug: string;
-  comments?: Array<Comment>;
   id: number;
 }

@@ -28,10 +28,8 @@ type NavBarMenu = {
 })
 export class HeaderComponent implements OnInit {
   private readonly router = inject(Router);
-  private readonly cdr = inject(ChangeDetectorRef);
   private readonly authRepository = inject(AuthRepository);
   private readonly titleService = inject(Title);
-  private readonly titleCasePipe = inject(TitleCasePipe);
 
 
   navBarMenus: NavBarMenu[] = [];
@@ -95,12 +93,7 @@ export class HeaderComponent implements OnInit {
           this.titleService.setTitle(
             `${this.navBarMenus[indexActiveMenu].title} - Conduit`
           );
-        } else {
-          const title = currentUrl.split('/').pop();
-          this.titleService.setTitle(`${this.titleCasePipe.transform(title)?.replaceAll('-', ' ')} - Conduit`);
         }
-
-        this.cdr.markForCheck();
       });
   }
 }

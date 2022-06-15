@@ -1,0 +1,37 @@
+.card-comment {
+  border-radius: 0.25rem;
+  border: 1px solid #e5e5e5;
+  textarea {
+    border: none;
+
+    &:focus {
+      border: none;
+      box-shadow: none;
+    }
+  }
+  .card-footer {
+    border-top: 1px solid #e5e5e5;
+    padding: 0.75rem 1.25rem;
+    background-color: #f5f5f5;
+    display: flex;
+    .avatar {
+      height: 30px;
+      width: 30px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .btn-submit {
+      margin-left: auto;
+      color: #fff;
+      background-color: #5cb85c;
+      border-color: #5cb85c;
+
+      &:hover {
+        color: #fff;
+        background-color: #449d44;
+        border-color: #419641;
+      }
+    }
+  }
+}

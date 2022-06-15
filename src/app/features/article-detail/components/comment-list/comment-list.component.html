@@ -1,0 +1,21 @@
+<div class="comment-list">
+  <ng-container *ngFor="let comment of comments$ | async">
+    <div class="card-comment">
+      <div class="card-body">
+        <p>
+          {{ comment.content }}
+        </p>
+      </div>
+      <div
+        class="card-footer"
+        *ngIf="loadAuthorComment(comment.userId) | async as author"
+      >
+        <img src="assets/img/avatar.jpg" class="avatar" />
+        <a class="author" [routerLink]="['/@' + author.username]">{{
+          author.username
+        }}</a>
+        <p class="date">{{ comment.creationTime | date: "MMMM d, y" }}</p>
+      </div>
+    </div>
+  </ng-container>
+</div>
