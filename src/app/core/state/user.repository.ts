@@ -1,11 +1,10 @@
-import { of, switchMap, Observable } from 'rxjs';
-import { AuthRepository } from './auth.repository';
 import { inject, Injectable } from '@angular/core';
 import { createStore, select, withProps } from '@ngneat/elf';
 import { localStorageStrategy, persistState } from '@ngneat/elf-persist-state';
-import { User } from '../models/user.model';
-import { Router } from '@angular/router';
+import { Observable, of, switchMap } from 'rxjs';
 import { UserData } from '../data/user.data';
+import { User } from '../models/user.model';
+import { AuthRepository } from './auth.repository';
 
 export type UserUpdateFormData = {
   username: string;
@@ -40,7 +39,6 @@ persistState(userStore, {
 })
 export class UserRepository {
   private readonly authRepository = inject(AuthRepository);
-  private readonly router = inject(Router);
   readonly store = userStore;
 
   addUser(user: UserCreateFormData): User {
@@ -65,6 +63,34 @@ export class UserRepository {
     );
   }
 
+  updateFavoriteArticlesOfUser(articleId: number, userId: number): void {
+    const userList = userStore.getValue().users;
+    const user = userList.find((x) => x.id === userId);
+    if (!user) {
+      return;
+    }
+    user.favoritedArticles = [...(user.favoritedArticles || []), articleId];
+    userStore.update((s) => ({
+      ...s,
+      users: userList,
+    }));
+  }
+
+  updateUnfavoriteArticlesOfUser(articleId: number, userId: number): void {
+    const userList = userStore.getValue().users;
+    const user = userList.find((x) => x.id === userId);
+    if (!user) {
+      return;
+    }
+    user.favoritedArticles = user.favoritedArticles?.filter(
+      (x) => x !== articleId
+    );
+    userStore.update((s) => ({
+      ...s,
+      users: userList,
+    }));
+  }
+
   updateUser(updateInfo: UserUpdateFormData): void {
     const userList = userStore.getValue().users;
     const user = userList.find((x) => x.id === updateInfo.id);
@@ -84,6 +110,5 @@ export class UserRepository {
       users: userList,
     }));
     this.authRepository.updateAuthUserInfo(user);
-    this.router.navigate(['']);
   }
 }

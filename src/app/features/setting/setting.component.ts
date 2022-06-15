@@ -87,6 +87,7 @@ export class SettingComponent implements OnInit {
       newPassword: newPassword!,
       username: username!,
     });
+    this.router.navigate(['']);
   }
 
   logout(): void {

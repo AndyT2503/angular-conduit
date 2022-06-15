@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   inject,
   OnInit,
@@ -26,7 +27,7 @@ export class ProfileArticleListComponent implements OnInit {
   private readonly articleType = inject(ARTICLE_TYPE);
   private readonly articleRepository = inject(ArticleRepository);
   private readonly profileRepository = inject(ProfileRepository);
-
+  private readonly cdr = inject(ChangeDetectorRef);
   articleList: Article[] = [];
   ngOnInit(): void {
     this.loadArticle();
@@ -46,6 +47,7 @@ export class ProfileArticleListComponent implements OnInit {
       )
       .subscribe((articles) => {
         this.articleList = articles;
+        this.cdr.markForCheck();
       });
   }
 }

@@ -8,4 +8,5 @@ export type Article = {
   title: string;
   slug: string;
   id: number;
+  favorited: number;
 }

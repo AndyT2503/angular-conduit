@@ -55,9 +55,14 @@
         <button class="btn btn-outline-secondary btn-sm">
           <i class="fa-solid fa-plus"></i> Follow {{ author.username }}
         </button>
-        <button class="btn favorite-btn btn-sm">
-          <i class="fa-solid fa-heart"></i> Favorite Article (2667)
+        <button class="btn favorite-btn btn-sm" *ngIf="!(checkFavoritedArticle | async); else unfavorite" (click)="favoriteArticle(article.id)">
+          <i class="fa-solid fa-heart"></i> Favorite Article ({{article.favorited}})
         </button>
+        <ng-template #unfavorite>
+          <button class="btn favorite-btn btn-sm" (click)="unfavoriteArticle(article.id)">
+            <i class="fa-solid fa-heart"></i> Unfavorite Article ({{article.favorited}})
+          </button>
+        </ng-template>
       </ng-container>
       <ng-template #editTmp>
         <button

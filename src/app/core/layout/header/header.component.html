@@ -10,5 +10,12 @@
         <i [class]="item.icon + ' me-1'"></i>{{ item.title }}
       </li>
     </ng-container>
+    <li
+      [routerLink]="['@' + currentUser.username]"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      {{ currentUser.username }}
+    </li>
   </ul>
 </header>

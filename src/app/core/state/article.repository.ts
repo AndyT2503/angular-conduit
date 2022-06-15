@@ -1,3 +1,4 @@
+import { UserRepository } from 'src/app/core/state/user.repository';
 import { inject, Injectable } from '@angular/core';
 import { createStore, select, withProps } from '@ngneat/elf';
 import { localStorageStrategy, persistState } from '@ngneat/elf-persist-state';
@@ -40,7 +41,7 @@ export class ArticleRepository {
   readonly articleStore = articleStore;
   readonly articles$ = articleStore.pipe(select((state) => state.articles));
   private readonly authRepository = inject(AuthRepository);
-
+  private readonly userRepository = inject(UserRepository);
   loadArticleByType(type: ArticleType, user: User): Observable<Article[]> {
     return this.articles$.pipe(
       switchMap((res) =>
@@ -106,6 +107,7 @@ export class ArticleRepository {
       title: article.title,
       userId: userAuth?.id!,
       id: newId,
+      favorited: 0,
     };
 
     const articleList = [...articles!, newArticle];
@@ -139,6 +141,34 @@ export class ArticleRepository {
       ...state,
       articles: newArticles,
     }));
+  }
+
+  updateFavoriteArticle(articleId: number): void {
+    const { user } = this.authRepository.authStore.getValue();
+    const { articles } = this.articleStore.getValue();
+    const oldArticle = articles?.find((x) => x.id === articleId);
+    if (!oldArticle) return;
+    oldArticle.favorited += 1;
+    this.articleStore.update((state) => ({
+      ...state,
+      articles,
+    }));
+    this.authRepository.updateFavoriteArticles(articleId);
+    this.userRepository.updateFavoriteArticlesOfUser(articleId, user?.id!);
+  }
+
+  updateUnfavoriteArticle(articleId: number): void {
+    const { user } = this.authRepository.authStore.getValue();
+    const { articles } = this.articleStore.getValue();
+    const oldArticle = articles?.find((x) => x.id === articleId);
+    if (!oldArticle) return;
+    oldArticle.favorited -= 1;
+    this.articleStore.update((state) => ({
+      ...state,
+      articles,
+    }));
+    this.authRepository.updateUnfavoriteArticles(articleId);
+    this.userRepository.updateUnfavoriteArticlesOfUser(articleId, user?.id!);
   }
 
   private generateSlug(title: string, id: number): string {

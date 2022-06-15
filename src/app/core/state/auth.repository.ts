@@ -1,4 +1,6 @@
-import { Injectable } from '@angular/core';
+import { ArticleRepository } from 'src/app/core/state/article.repository';
+import { UserRepository } from 'src/app/core/state/user.repository';
+import { inject, Injectable } from '@angular/core';
 import { createStore, select, withProps } from '@ngneat/elf';
 import { localStorageStrategy, persistState } from '@ngneat/elf-persist-state';
 import { map } from 'rxjs';
@@ -41,5 +43,17 @@ export class AuthRepository {
       ...state,
       user: null,
     }));
+  }
+
+  updateFavoriteArticles(articleId: number): void {
+    const { user } = this.authStore.getValue();
+    user!.favoritedArticles = [...(user?.favoritedArticles || []), articleId];
+    this.updateAuthUserInfo(user);
+  }
+
+  updateUnfavoriteArticles(articleId: number): void {
+    const { user } = this.authStore.getValue();
+    user!.favoritedArticles = user?.favoritedArticles?.filter(x => x !== articleId);
+    this.updateAuthUserInfo(user);
   }
 }

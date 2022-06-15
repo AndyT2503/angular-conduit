@@ -10,7 +10,8 @@ export const GlobalArticles: Article[] = [
     title: 'Create a new implementation',
     userId: 1,
     id: 1,
-    description: 'Share your knowledge and enpower the community by creating a new implementation'
+    description: 'Share your knowledge and enpower the community by creating a new implementation',
+    favorited: 0
   },
   {
     content:
@@ -21,7 +22,8 @@ export const GlobalArticles: Article[] = [
     title: 'Explore implementations',
     userId: 1,
     id: 2,
-    description: 'Over 100 implementations have been created using various languages, libraries, and frameworks.'
+    description: 'Over 100 implementations have been created using various languages, libraries, and frameworks.',
+    favorited: 0
   },
   {
     content:
@@ -32,6 +34,7 @@ export const GlobalArticles: Article[] = [
     title: 'Welcome to RealWorld project',
     userId: 1,
     id: 3,
-    description: 'Exemplary fullstack Medium.com clone powered by React, Angular, Node, Django, and many more'
+    description: 'Exemplary fullstack Medium.com clone powered by React, Angular, Node, Django, and many more',
+    favorited: 0
   },
 ];

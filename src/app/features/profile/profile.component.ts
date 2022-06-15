@@ -13,6 +13,7 @@ import { User } from 'src/app/core/models/user.model';
 import { AuthRepository } from 'src/app/core/state/auth.repository';
 import { UserRepository } from 'src/app/core/state/user.repository';
 import { ArticleToggleComponent } from './components/article-toggle/article-toggle.component';
+import { Title } from '@angular/platform-browser';
 
 @UntilDestroy()
 @Component({
@@ -30,7 +31,7 @@ export class ProfileComponent implements OnInit {
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly authRepository = inject(AuthRepository);
   private readonly profileRepository = inject(ProfileRepository);
-
+  private readonly title = inject(Title);
   user!: User;
 
   get isLoginUser(): boolean {
@@ -45,6 +46,7 @@ export class ProfileComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe((params) => {
         const usernameParams = params['username'] as string;
+        this.title.setTitle(usernameParams);
         const username = usernameParams.replace('@', '');
         const user = this.userRepository.store
           .getValue()

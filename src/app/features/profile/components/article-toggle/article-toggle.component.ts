@@ -1,11 +1,15 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  Component, Input,
-  OnInit
+  Component,
+  Input,
+  OnInit,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { TabItem, TabToggleComponent } from 'src/app/shared/components/tab-toggle/tab-toggle.component';
+import {
+  TabItem,
+  TabToggleComponent,
+} from 'src/app/shared/components/tab-toggle/tab-toggle.component';
 
 @Component({
   selector: 'app-article-toggle[username]',
@@ -15,21 +19,25 @@ import { TabItem, TabToggleComponent } from 'src/app/shared/components/tab-toggl
   styleUrls: ['./article-toggle.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ArticleToggleComponent implements OnInit {
-  @Input() username = '';
-
-  tabList: TabItem[] = [];
-
-  ngOnInit(): void {
+export class ArticleToggleComponent {
+  private _username!: string;
+  @Input() set username(value: string) {
+    this._username = value;
     this.tabList = [
       {
-        link: `/@${this.username}`,
+        link: `/@${this._username}`,
         title: 'My Articles',
       },
       {
-        link: `/@${this.username}/favorites`,
+        link: `/@${this._username}/favorites`,
         title: 'Favorited Articles',
       },
     ];
   }
+
+  get username() {
+    return this._username;
+  }
+
+  tabList: TabItem[] = [];
 }

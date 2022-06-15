@@ -1,5 +1,5 @@
 import { AuthRepository } from './../../core/state/auth.repository';
-import { switchMap, tap } from 'rxjs';
+import { Observable, of, switchMap, tap } from 'rxjs';
 import { ArticleRepository } from 'src/app/core/state/article.repository';
 import {
   ChangeDetectionStrategy,
@@ -21,7 +21,12 @@ import { CommentFormComponent } from './components/comment-form/comment-form.com
 @Component({
   selector: 'app-article-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule, CommentListComponent, CommentFormComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    CommentListComponent,
+    CommentFormComponent,
+  ],
   templateUrl: './article-detail.component.html',
   styleUrls: ['./article-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,8 +44,21 @@ export class ArticleDetailComponent implements OnInit {
   readonly authUser$ = this.authRepository.authUser$;
 
   article!: Article;
+
   ngOnInit(): void {
     this.loadArticleInfo();
+  }
+
+  get checkFavoritedArticle(): Observable<boolean> {
+    return this.authRepository.authUser$.pipe(
+      switchMap((user) => {
+        if (!user) {
+          return of(false);
+        } else {
+          return of(!!user?.favoritedArticles?.includes(this.article.id));
+        }
+      })
+    );
   }
 
   loadArticleInfo(): void {
@@ -66,5 +84,17 @@ export class ArticleDetailComponent implements OnInit {
   deleteArticle(id: number): void {
     this.articleRepository.deleteArticle(id);
     this.router.navigate(['']);
+  }
+
+  favoriteArticle(id: number): void {
+    if (!this.authRepository.authStore.getValue().user) {
+      this.router.navigate(['/register']);
+      return;
+    }
+    this.articleRepository.updateFavoriteArticle(id);
+  }
+
+  unfavoriteArticle(id: number): void {
+    this.articleRepository.updateUnfavoriteArticle(id);
   }
 }

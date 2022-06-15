@@ -1,3 +1,4 @@
+import { ArticleRepository } from 'src/app/core/state/article.repository';
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -7,10 +8,11 @@ import {
   OnInit,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { take } from 'rxjs';
+import { Observable, of, switchMap, take } from 'rxjs';
 import { Article } from 'src/app/core/models/article.model';
 import { User } from 'src/app/core/models/user.model';
 import { UserRepository } from 'src/app/core/state/user.repository';
+import { AuthRepository } from 'src/app/core/state/auth.repository';
 
 @Component({
   selector: 'app-article[article]',
@@ -22,13 +24,34 @@ import { UserRepository } from 'src/app/core/state/user.repository';
 })
 export class ArticleComponent implements OnInit {
   @Input() article!: Article;
-  readonly userRepository = inject(UserRepository);
-
+  private readonly userRepository = inject(UserRepository);
+  private readonly articleRepository = inject(ArticleRepository);
+  private readonly authRepository = inject(AuthRepository);
   author!: User;
   ngOnInit() {
     this.userRepository
       .getUserById(this.article.userId)
       .pipe(take(1))
       .subscribe((res) => (this.author = res));
+  }
+
+  get checkFavoritedArticle(): Observable<boolean> {
+    return this.authRepository.authUser$.pipe(
+      switchMap((user) => {
+        if (!user) {
+          return of(false);
+        } else {
+          return of(!!user?.favoritedArticles?.includes(this.article.id));
+        }
+      })
+    );
+  }
+
+  favoriteArticle(): void {
+    this.articleRepository.updateFavoriteArticle(this.article.id);
+  }
+
+  unfavoriteArticle(): void {
+    this.articleRepository.updateUnfavoriteArticle(this.article.id);
   }
 }

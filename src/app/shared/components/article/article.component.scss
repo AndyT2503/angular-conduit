@@ -39,6 +39,14 @@
         background-color: #5cb85c;
       }
     }
+
+    .unfavorite-btn {
+      background-color: #5cb85c;
+      color: #fff;
+      &:hover {
+        background-color: #419641;
+      }
+    }
   }
 
   .preview-link {

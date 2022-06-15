@@ -4,11 +4,12 @@ import {
   ChangeDetectorRef,
   Component,
   inject,
-  OnInit
+  OnInit,
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter } from 'rxjs';
+import { User } from '../../models/user.model';
 import { AuthRepository } from '../../state/auth.repository';
 
 type NavBarMenu = {
@@ -31,7 +32,7 @@ export class HeaderComponent implements OnInit {
   private readonly authRepository = inject(AuthRepository);
   private readonly titleService = inject(Title);
 
-
+  currentUser!: User;
   navBarMenus: NavBarMenu[] = [];
 
   ngOnInit(): void {
@@ -57,6 +58,7 @@ export class HeaderComponent implements OnInit {
           },
         ];
       } else {
+        this.currentUser = user;
         this.navBarMenus = [
           {
             url: '',
@@ -65,16 +67,12 @@ export class HeaderComponent implements OnInit {
           {
             url: 'editor',
             title: 'New Article',
-            icon: 'fa-solid fa-pen-to-square'
+            icon: 'fa-solid fa-pen-to-square',
           },
           {
             url: 'settings',
             title: 'Settings',
-            icon: 'fa-solid fa-gear'
-          },
-          {
-            url: `@${user.username}`,
-            title: user.username,
+            icon: 'fa-solid fa-gear',
           },
         ];
       }
