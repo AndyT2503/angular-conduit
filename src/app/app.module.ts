@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { PreloadAllModules, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import { appRoutes } from './app.routing';
+import { appRoutes } from './app.routes';
 import { FooterComponent } from './core/layout/footer/footer.component';
 import { HeaderComponent } from './core/layout/header/header.component';
 
@@ -17,7 +17,6 @@ import { HeaderComponent } from './core/layout/header/header.component';
     RouterModule.forRoot(appRoutes, {
       scrollPositionRestoration: 'top',
       useHash: true,
-      preloadingStrategy: PreloadAllModules,
       initialNavigation: 'enabledBlocking',
     }),
   ],

@@ -11,6 +11,7 @@
       </li>
     </ng-container>
     <li
+      *ngIf="!!currentUser"
       [routerLink]="['@' + currentUser.username]"
       routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: true }"

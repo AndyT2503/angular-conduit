@@ -1,8 +1,12 @@
+import { AuthGuard } from './core/guards/auth.guard';
 import { Routes } from '@angular/router';
+import { NonAuthGuard } from './core/guards/non-auth.guard';
 
 export const appRoutes: Routes = [
   {
     path: 'login',
+    canActivate: [NonAuthGuard],
+    canLoad: [NonAuthGuard],
     loadComponent: () =>
       import('./features/sign-in/sign-in.component').then(
         (c) => c.SignInComponent
@@ -10,6 +14,8 @@ export const appRoutes: Routes = [
   },
   {
     path: 'register',
+    canActivate: [NonAuthGuard],
+    canLoad: [NonAuthGuard],
     loadComponent: () =>
       import('./features/sign-up/sign-up.component').then(
         (c) => c.SignUpComponent
@@ -17,6 +23,8 @@ export const appRoutes: Routes = [
   },
   {
     path: 'settings',
+    canActivate: [AuthGuard],
+    canLoad: [AuthGuard],
     loadComponent: () =>
       import('./features/setting/setting.component').then(
         (c) => c.SettingComponent
@@ -31,6 +39,8 @@ export const appRoutes: Routes = [
   },
   {
     path: 'editor',
+    canActivate: [AuthGuard],
+    canLoad: [AuthGuard],
     loadChildren: () =>
       import('./features/editor/editor.route').then((m) => m.editorRoutes),
   },
