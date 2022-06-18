@@ -1,4 +1,3 @@
-import { TypedFormGroup } from './../../shared/utils/typed-form';
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -14,8 +13,8 @@ import {
   Validators
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { AuthRepository } from 'src/app/core/state/auth.repository';
-import { UserRepository } from 'src/app/core/state/user.repository';
+import { AuthRepository, UserRepository } from 'src/app/core/state';
+import { TypedFormGroup } from 'src/app/shared/utils';
 
 type SignInFormData = {
   email: string;

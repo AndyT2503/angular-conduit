@@ -1,21 +1,17 @@
-import { TabToggleComponent } from './../../shared/components/tab-toggle/tab-toggle.component';
-import { RouterModule } from '@angular/router';
-import { Article } from './../../core/models/article.model';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { AuthRepository } from 'src/app/core/state/auth.repository';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   inject,
-  OnInit,
+  OnInit
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ArticleRepository } from 'src/app/core/state/article.repository';
-import { ArticleComponent } from 'src/app/shared/components/article/article.component';
-import { TabItem } from 'src/app/shared/components/tab-toggle/tab-toggle.component';
+import { RouterModule } from '@angular/router';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { take } from 'rxjs';
-import { ArticleListComponent } from 'src/app/shared/components/article-list/article-list.component';
+import { Article } from 'src/app/core/models';
+import { ArticleRepository, AuthRepository } from 'src/app/core/state';
+import { ArticleListComponent, TabItem, TabToggleComponent } from 'src/app/shared/components';
 
 @UntilDestroy()
 @Component({

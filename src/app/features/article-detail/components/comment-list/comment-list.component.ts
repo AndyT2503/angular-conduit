@@ -10,8 +10,7 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CommentRepository } from 'src/app/core/state/comment.repository';
-import { Comment } from 'src/app/core/models/comment.model';
-import { User } from 'src/app/core/models/user.model';
+import { User, Comment } from 'src/app/core/models';
 @Component({
   selector: 'app-comment-list[articleId]',
   standalone: true,

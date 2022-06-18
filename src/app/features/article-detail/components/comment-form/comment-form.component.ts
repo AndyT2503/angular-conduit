@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CommentRepository } from 'src/app/core/state/comment.repository';
+import { CommentRepository } from 'src/app/core/state';
 
 @Component({
   selector: 'app-comment-form[articleId]',

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Article } from 'src/app/core/models/article.model';
+import { Article } from 'src/app/core/models';
 import { ArticleComponent } from '../article/article.component';
 
 @Component({

@@ -1,4 +1,4 @@
-import { ArticleFormData, ArticleRepository } from 'src/app/core/state/article.repository';
+import { ArticleFormData, ArticleRepository } from 'src/app/core/state';
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ArticleFormComponent } from '../article-form/article-form.component';

@@ -1,19 +1,16 @@
-import { ArticleFormComponent } from './../article-form/article-form.component';
-import { switchMap } from 'rxjs';
-import {
-  ArticleFormData,
-  ArticleRepository,
-} from './../../../core/state/article.repository';
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  OnInit,
+  OnInit
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { Article } from 'src/app/core/models/article.model';
+import { switchMap } from 'rxjs';
+import { Article } from 'src/app/core/models';
+import { ArticleFormData, ArticleRepository } from 'src/app/core/state';
+import { ArticleFormComponent } from '../article-form/article-form.component';
 
 @UntilDestroy()
 @Component({

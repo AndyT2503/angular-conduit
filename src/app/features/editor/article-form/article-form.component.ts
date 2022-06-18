@@ -1,22 +1,20 @@
-import { ArticleFormData } from './../../../core/state/article.repository';
-import { TypedFormGroup } from './../../../shared/utils/typed-form';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  Input,
-  OnInit,
-  Output,
+  Input, Output
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
-  Validators,
+  Validators
 } from '@angular/forms';
-import { Article } from 'src/app/core/models/article.model';
+import { Article } from 'src/app/core/models';
+import { ArticleFormData } from 'src/app/core/state';
+import { TypedFormGroup } from 'src/app/shared/utils';
 
 @Component({
   selector: 'app-article-form',

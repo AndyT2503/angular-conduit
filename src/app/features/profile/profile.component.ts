@@ -1,19 +1,18 @@
-import { ProfileRepository } from './state/profile.repository';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   inject,
-  OnInit,
+  OnInit
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { User } from 'src/app/core/models/user.model';
-import { AuthRepository } from 'src/app/core/state/auth.repository';
-import { UserRepository } from 'src/app/core/state/user.repository';
+import { User } from 'src/app/core/models';
+import { AuthRepository, UserRepository } from 'src/app/core/state';
 import { ArticleToggleComponent } from './components/article-toggle/article-toggle.component';
-import { Title } from '@angular/platform-browser';
+import { ProfileRepository } from './state/profile.repository';
 
 @UntilDestroy()
 @Component({

@@ -1,22 +1,21 @@
-import { TypedFormGroup } from './../../shared/utils/typed-form';
-import { UserRepository, UserUpdateFormData } from 'src/app/core/state/user.repository';
+
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  Component,
-  OnInit,
-  inject,
+  Component, inject, OnInit
 } from '@angular/core';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
-  Validators,
+  Validators
 } from '@angular/forms';
-import { filter } from 'rxjs';
-import { AuthRepository } from 'src/app/core/state/auth.repository';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Router } from '@angular/router';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { filter } from 'rxjs';
+import { UserRepository, UserUpdateFormData } from 'src/app/core/state';
+import { AuthRepository } from 'src/app/core/state/auth.repository';
+import { TypedFormGroup } from 'src/app/shared/utils';
 
 @UntilDestroy()
 @Component({

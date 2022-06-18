@@ -2,14 +2,13 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
-  OnInit,
+  Input
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
   TabItem,
-  TabToggleComponent,
-} from 'src/app/shared/components/tab-toggle/tab-toggle.component';
+  TabToggleComponent
+} from 'src/app/shared/components';
 
 @Component({
   selector: 'app-article-toggle[username]',

@@ -4,13 +4,13 @@ import {
   ChangeDetectorRef,
   Component,
   inject,
-  OnInit,
+  OnInit
 } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filter, switchMap } from 'rxjs';
-import { Article } from 'src/app/core/models/article.model';
-import { ArticleRepository } from 'src/app/core/state/article.repository';
-import { ArticleListComponent } from 'src/app/shared/components/article-list/article-list.component';
+import { Article } from 'src/app/core/models';
+import { ArticleRepository } from 'src/app/core/state';
+import { ArticleListComponent } from 'src/app/shared/components';
 import { ProfileRepository } from '../../state/profile.repository';
 import { ARTICLE_TYPE } from './profile-article-list.di';
 

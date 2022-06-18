@@ -1,4 +1,3 @@
-import { ArticleRepository } from 'src/app/core/state/article.repository';
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -9,10 +8,8 @@ import {
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Observable, of, switchMap, take } from 'rxjs';
-import { Article } from 'src/app/core/models/article.model';
-import { User } from 'src/app/core/models/user.model';
-import { UserRepository } from 'src/app/core/state/user.repository';
-import { AuthRepository } from 'src/app/core/state/auth.repository';
+import { Article, User } from 'src/app/core/models';
+import { UserRepository, ArticleRepository, AuthRepository } from 'src/app/core/state';
 
 @Component({
   selector: 'app-article[article]',

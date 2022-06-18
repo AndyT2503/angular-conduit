@@ -1,6 +1,4 @@
-import { AuthRepository } from './../../core/state/auth.repository';
 import { Observable, of, switchMap, tap } from 'rxjs';
-import { ArticleRepository } from 'src/app/core/state/article.repository';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -9,13 +7,12 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Article } from 'src/app/core/models/article.model';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { UserRepository } from 'src/app/core/state/user.repository';
-import { User } from 'src/app/core/models/user.model';
 import { Title } from '@angular/platform-browser';
 import { CommentListComponent } from './components/comment-list/comment-list.component';
 import { CommentFormComponent } from './components/comment-form/comment-form.component';
+import { User, Article } from 'src/app/core/models';
+import { ArticleRepository, AuthRepository, UserRepository } from 'src/app/core/state';
 
 @UntilDestroy()
 @Component({
@@ -72,7 +69,7 @@ export class ArticleDetailComponent implements OnInit {
             this.router.navigate(['']);
           }
           this.article = article!;
-          this.title.setTitle(this.article.title);
+          this.title.setTitle(`${this.article.title} - Conduit`);
           return this.userRepository.getUserById(this.article.userId);
         }),
         tap((user) => (this.author = user)),

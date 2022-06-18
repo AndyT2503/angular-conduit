@@ -1,21 +1,20 @@
-import { TypedFormGroup } from './../../shared/utils/typed-form';
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   inject,
-  OnInit,
+  OnInit
 } from '@angular/core';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
-  Validators,
+  Validators
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { AuthRepository } from 'src/app/core/state/auth.repository';
-import { UserCreateFormData, UserRepository } from 'src/app/core/state/user.repository';
+import { AuthRepository, UserCreateFormData, UserRepository } from 'src/app/core/state';
+import { TypedFormGroup } from 'src/app/shared/utils';
 
 @Component({
   selector: 'app-sign-up',
