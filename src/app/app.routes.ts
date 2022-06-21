@@ -6,7 +6,6 @@ export const appRoutes: Routes = [
   {
     path: 'login',
     canActivate: [NonAuthGuard],
-    canLoad: [NonAuthGuard],
     loadComponent: () =>
       import('./features/sign-in/sign-in.component').then(
         (c) => c.SignInComponent
@@ -14,7 +13,6 @@ export const appRoutes: Routes = [
   },
   {
     path: 'register',
-    canActivate: [NonAuthGuard],
     canLoad: [NonAuthGuard],
     loadComponent: () =>
       import('./features/sign-up/sign-up.component').then(
@@ -24,7 +22,6 @@ export const appRoutes: Routes = [
   {
     path: 'settings',
     canActivate: [AuthGuard],
-    canLoad: [AuthGuard],
     loadComponent: () =>
       import('./features/setting/setting.component').then(
         (c) => c.SettingComponent
