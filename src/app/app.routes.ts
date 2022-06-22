@@ -1,6 +1,7 @@
-import { AuthGuard } from './core/guards/auth.guard';
 import { Routes } from '@angular/router';
+import { AuthGuard } from './core/guards/auth.guard';
 import { NonAuthGuard } from './core/guards/non-auth.guard';
+import { editorSeo, homeSeo, signInSeo, signUpSeo } from './core/seo';
 
 export const appRoutes: Routes = [
   {
@@ -10,6 +11,7 @@ export const appRoutes: Routes = [
       import('./features/sign-in/sign-in.component').then(
         (c) => c.SignInComponent
       ),
+    data: signInSeo,
   },
   {
     path: 'register',
@@ -18,6 +20,7 @@ export const appRoutes: Routes = [
       import('./features/sign-up/sign-up.component').then(
         (c) => c.SignUpComponent
       ),
+    data: signUpSeo,
   },
   {
     path: 'settings',
@@ -40,6 +43,7 @@ export const appRoutes: Routes = [
     canLoad: [AuthGuard],
     loadChildren: () =>
       import('./features/editor/editor.route').then((m) => m.editorRoutes),
+    data: editorSeo,
   },
   {
     path: '',
@@ -47,12 +51,11 @@ export const appRoutes: Routes = [
       import('./features/news-feed/news-feed.component').then(
         (c) => c.NewsFeedComponent
       ),
+    data: homeSeo,
   },
   {
     path: ':username',
     loadChildren: () =>
-      import('./features/profile/profile.route').then(
-        (m) => m.profileRoutes
-      ),
+      import('./features/profile/profile.route').then((m) => m.profileRoutes),
   },
 ];

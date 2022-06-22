@@ -6,11 +6,11 @@ import {
   inject,
   OnInit
 } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { User } from 'src/app/core/models';
 import { AuthRepository, UserRepository } from 'src/app/core/state';
+import { SeoService } from 'src/app/shared/services/seo.service';
 import { ArticleToggleComponent } from './components/article-toggle/article-toggle.component';
 import { ProfileRepository } from './state/profile.repository';
 
@@ -30,7 +30,7 @@ export class ProfileComponent implements OnInit {
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly authRepository = inject(AuthRepository);
   private readonly profileRepository = inject(ProfileRepository);
-  private readonly title = inject(Title);
+  private readonly seoService = inject(SeoService);
   user!: User;
 
   get isLoginUser(): boolean {
@@ -45,7 +45,7 @@ export class ProfileComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe((params) => {
         const usernameParams = params['username'] as string;
-        this.title.setTitle(`${usernameParams} - Conduit`);
+        this.seoService.setTitle(`${usernameParams} - Conduit`);
         const username = usernameParams.replace('@', '');
         const user = this.userRepository.store
           .getValue()

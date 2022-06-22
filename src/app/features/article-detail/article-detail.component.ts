@@ -1,18 +1,18 @@
-import { Observable, of, switchMap, tap } from 'rxjs';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  OnInit,
+  OnInit
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { Title } from '@angular/platform-browser';
-import { CommentListComponent } from './components/comment-list/comment-list.component';
-import { CommentFormComponent } from './components/comment-form/comment-form.component';
-import { User, Article } from 'src/app/core/models';
+import { Observable, of, switchMap, tap } from 'rxjs';
+import { Article, User } from 'src/app/core/models';
 import { ArticleRepository, AuthRepository, UserRepository } from 'src/app/core/state';
+import { SeoService } from './../../shared/services/seo.service';
+import { CommentFormComponent } from './components/comment-form/comment-form.component';
+import { CommentListComponent } from './components/comment-list/comment-list.component';
 
 @UntilDestroy()
 @Component({
@@ -34,7 +34,7 @@ export class ArticleDetailComponent implements OnInit {
   private readonly authRepository = inject(AuthRepository);
   private readonly router = inject(Router);
   private readonly userRepository = inject(UserRepository);
-  private readonly title = inject(Title);
+  private readonly seoService = inject(SeoService);
   author!: User;
 
   readonly isAuthenticated$ = this.authRepository.isAuthenticated$;
@@ -69,7 +69,7 @@ export class ArticleDetailComponent implements OnInit {
             this.router.navigate(['']);
           }
           this.article = article!;
-          this.title.setTitle(`${this.article.title} - Conduit`);
+          this.seoService.setTitle(`${this.article.title} - Conduit`);
           return this.userRepository.getUserById(this.article.userId);
         }),
         tap((user) => (this.author = user)),

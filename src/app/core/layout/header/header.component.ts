@@ -1,14 +1,10 @@
 import { CommonModule, TitleCasePipe } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
+  ChangeDetectionStrategy, Component,
   inject,
-  OnInit,
+  OnInit
 } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { NavigationEnd, Router, RouterModule } from '@angular/router';
-import { filter } from 'rxjs';
+import { RouterModule } from '@angular/router';
 import { User } from '../../models/user.model';
 import { AuthRepository } from '../../state/auth.repository';
 
@@ -28,16 +24,13 @@ type NavBarMenu = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit {
-  private readonly router = inject(Router);
   private readonly authRepository = inject(AuthRepository);
-  private readonly titleService = inject(Title);
 
   currentUser!: User;
   navBarMenus: NavBarMenu[] = [];
 
   ngOnInit(): void {
     this.loadMenu();
-    this.loadCurrentUrl();
   }
 
   loadMenu(): void {
@@ -77,21 +70,5 @@ export class HeaderComponent implements OnInit {
         ];
       }
     });
-  }
-
-  loadCurrentUrl(): void {
-    this.router.events
-      .pipe(filter((val) => val instanceof NavigationEnd))
-      .subscribe((res) => {
-        const currentUrl = (res as NavigationEnd).url;
-        const indexActiveMenu = this.navBarMenus.findIndex(
-          (x) => currentUrl == `/${x.url}`
-        );
-        if (indexActiveMenu !== -1) {
-          this.titleService.setTitle(
-            `${this.navBarMenus[indexActiveMenu].title} - Conduit`
-          );
-        }
-      });
   }
 }

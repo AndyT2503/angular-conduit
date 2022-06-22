@@ -1,14 +1,17 @@
+import { SeoService } from './../../shared/services/seo.service';
 
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  Component, inject, OnInit
+  Component,
+  inject,
+  OnInit,
 } from '@angular/core';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
-  Validators
+  Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -30,9 +33,11 @@ export class SettingComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly authRepository = inject(AuthRepository);
   private readonly userRepository = inject(UserRepository);
+  private readonly seoService = inject(SeoService);
   settingForm!: TypedFormGroup<UserUpdateFormData>;
 
   ngOnInit(): void {
+    this.seoService.setTitle('Settings - Conduit');
     this.initForm();
     this.loadSettingForm();
   }

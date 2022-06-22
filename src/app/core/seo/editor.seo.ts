@@ -1,14 +1,15 @@
 import { Seo } from '../models';
-export const signInSeo: Seo = {
-  title: 'Sign in - Conduit',
+
+export const editorSeo: Seo = {
+  title: 'Editor - Conduit',
   metaDefinition: [
     {
       name: 'title',
-      content: 'Sign in - Conduit',
+      content: 'Editor - Conduit',
     },
     {
       name: 'description',
-      content: `Login to your Real World Conduits' account to use all functions`,
+      content: `Create new article to share everything you want`,
     },
     {
       name: 'twitter:card',
@@ -16,15 +17,15 @@ export const signInSeo: Seo = {
     },
     {
       name: 'twitter:title',
-      content: 'Sign in - Conduit',
+      content: 'Editor - Conduit',
     },
     {
       name: 'twitter:description',
-      content: `Login to your Real World Conduits' account to use all functions`,
+      content: `Create new article to share everything you want`,
     },
     {
       property: 'og:title',
-      content: 'Sign in - Conduit',
+      content: 'Editor - Conduit',
     },
     {
       property: 'og:type',
@@ -32,11 +33,11 @@ export const signInSeo: Seo = {
     },
     {
       property: 'og:url',
-      content: window.location.origin + '/#/login',
+      content: window.location.origin + '/#/editor',
     },
     {
       property: 'og:description',
-      content: `Login to your Real World Conduits' account to use all functions`,
+      content: `Create new article to share everything you want`,
     },
   ],
 };
