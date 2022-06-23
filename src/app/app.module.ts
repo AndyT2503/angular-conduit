@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { APP_INITIALIZER, Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
@@ -24,10 +24,11 @@ import { SeoService } from './shared/services/seo.service';
   providers: [
     {
       provide: APP_INITIALIZER,
-      useFactory: (seoService: SeoService) => () => {
+      useFactory: (injector: Injector) => () => {
+        const seoService = injector.get(SeoService);
         return seoService.loadSeoData().subscribe();
       },
-      deps: [SeoService],
+      deps: [Injector],
       multi: true,
     },
   ],

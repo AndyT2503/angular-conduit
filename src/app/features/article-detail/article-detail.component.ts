@@ -1,15 +1,20 @@
+import { MetaDefinition } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  OnInit
+  OnInit,
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable, of, switchMap, tap } from 'rxjs';
 import { Article, User } from 'src/app/core/models';
-import { ArticleRepository, AuthRepository, UserRepository } from 'src/app/core/state';
+import {
+  ArticleRepository,
+  AuthRepository,
+  UserRepository,
+} from 'src/app/core/state';
 import { SeoService } from './../../shared/services/seo.service';
 import { CommentFormComponent } from './components/comment-form/comment-form.component';
 import { CommentListComponent } from './components/comment-list/comment-list.component';
@@ -69,13 +74,56 @@ export class ArticleDetailComponent implements OnInit {
             this.router.navigate(['']);
           }
           this.article = article!;
-          this.seoService.setTitle(`${this.article.title} - Conduit`);
+          this.setSeoData(this.article);
           return this.userRepository.getUserById(this.article.userId);
         }),
         tap((user) => (this.author = user)),
         untilDestroyed(this)
       )
       .subscribe();
+  }
+
+  setSeoData(article: Article): void {
+    this.seoService.setTitle(`${article.title} - Conduit`);
+    const metaDefinition: MetaDefinition[] = [
+      {
+        name: 'title',
+        content: `${article.title} - Conduit`,
+      },
+      {
+        name: 'description',
+        content: article.description,
+      },
+      {
+        name: 'twitter:card',
+        content: 'summary',
+      },
+      {
+        name: 'twitter:title',
+        content: `${article.title} - Conduit`,
+      },
+      {
+        name: 'twitter:description',
+        content: article.description,
+      },
+      {
+        property: 'og:title',
+        content: `${article.title} - Conduit`,
+      },
+      {
+        property: 'og:type',
+        content: 'website',
+      },
+      {
+        property: 'og:url',
+        content: window.location.origin + '/#/article/' + article.slug,
+      },
+      {
+        property: 'og:description',
+        content: article.description,
+      },
+    ];
+    this.seoService.setMetaTags(metaDefinition);
   }
 
   deleteArticle(id: number): void {

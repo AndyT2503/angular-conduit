@@ -6,6 +6,7 @@ import {
   inject,
   OnInit
 } from '@angular/core';
+import { MetaDefinition } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { User } from 'src/app/core/models';
@@ -45,7 +46,6 @@ export class ProfileComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe((params) => {
         const usernameParams = params['username'] as string;
-        this.seoService.setTitle(`${usernameParams} - Conduit`);
         const username = usernameParams.replace('@', '');
         const user = this.userRepository.store
           .getValue()
@@ -54,8 +54,52 @@ export class ProfileComponent implements OnInit {
           this.router.navigate(['']);
         }
         this.user = user!;
+        this.setSeoData(this.user);
         this.profileRepository.updateProfile(this.user);
         this.cdr.markForCheck();
       });
+  }
+
+  setSeoData(user: User): void {
+    this.seoService.setTitle(`@${user.username} - Conduit`);
+    const metaDefinition: MetaDefinition[] = [
+      {
+        name: 'title',
+        content: `@${user.username} - Conduit`,
+      },
+      {
+        name: 'description',
+        content: user.bio || 'Profile of one of the many users in the system',
+      },
+      {
+        name: 'twitter:card',
+        content: 'summary',
+      },
+      {
+        name: 'twitter:title',
+        content: `@${user.username} - Conduit`,
+      },
+      {
+        name: 'twitter:description',
+        content: user.bio || 'Profile of one of the many users in system',
+      },
+      {
+        property: 'og:title',
+        content: `@${user.username} - Conduit`,
+      },
+      {
+        property: 'og:type',
+        content: 'website',
+      },
+      {
+        property: 'og:url',
+        content: window.location.origin + '/#/' + `@${user.username}`,
+      },
+      {
+        property: 'og:description',
+        content: `@${user.username} - Conduit`,
+      },
+    ];
+    this.seoService.setMetaTags(metaDefinition);
   }
 }

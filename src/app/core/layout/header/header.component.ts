@@ -50,6 +50,7 @@ export class HeaderComponent implements OnInit {
             title: 'Sign up',
           },
         ];
+        this.currentUser = {} as User;
       } else {
         this.currentUser = user;
         this.navBarMenus = [
