@@ -7,9 +7,9 @@ import {
   Router,
   RouterStateSnapshot,
   UrlSegment,
-  UrlTree,
+  UrlTree
 } from '@angular/router';
-import { map, Observable, of } from 'rxjs';
+import { map, Observable, take } from 'rxjs';
 import { AuthRepository } from './../state/auth.repository';
 
 @Injectable({
@@ -37,7 +37,8 @@ export class AuthGuard implements CanActivate, CanLoad {
         } else {
           return this.router.createUrlTree(['/login']);
         }
-      })
+      }),
+      take(1)
     );
   }
 }
