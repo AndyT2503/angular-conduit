@@ -1,8 +1,9 @@
-import { CommonModule, TitleCasePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
-  ChangeDetectionStrategy, Component,
+  ChangeDetectionStrategy,
+  Component,
   inject,
-  OnInit
+  OnInit,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { User } from '../../models/user.model';
@@ -14,19 +15,50 @@ type NavBarMenu = {
   icon?: string;
 };
 
+const AUTH_MENU: NavBarMenu[] = [
+  {
+    url: '',
+    title: 'Home',
+  },
+  {
+    url: 'login',
+    title: 'Sign in',
+  },
+  {
+    url: 'register',
+    title: 'Sign up',
+  },
+];
+
+const NON_AUTH_MENU: NavBarMenu[] = [
+  {
+    url: '',
+    title: 'Home',
+  },
+  {
+    url: 'editor',
+    title: 'New Article',
+    icon: 'fa-solid fa-pen-to-square',
+  },
+  {
+    url: 'settings',
+    title: 'Settings',
+    icon: 'fa-solid fa-gear',
+  },
+];
+
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  providers: [TitleCasePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit {
   private readonly authRepository = inject(AuthRepository);
 
-  currentUser!: User;
+  currentUser!: User | null;
   navBarMenus: NavBarMenu[] = [];
 
   ngOnInit(): void {
@@ -35,41 +67,8 @@ export class HeaderComponent implements OnInit {
 
   loadMenu(): void {
     this.authRepository.authUser$.subscribe((user) => {
-      if (!user) {
-        this.navBarMenus = [
-          {
-            url: '',
-            title: 'Home',
-          },
-          {
-            url: 'login',
-            title: 'Sign in',
-          },
-          {
-            url: 'register',
-            title: 'Sign up',
-          },
-        ];
-        this.currentUser = {} as User;
-      } else {
-        this.currentUser = user;
-        this.navBarMenus = [
-          {
-            url: '',
-            title: 'Home',
-          },
-          {
-            url: 'editor',
-            title: 'New Article',
-            icon: 'fa-solid fa-pen-to-square',
-          },
-          {
-            url: 'settings',
-            title: 'Settings',
-            icon: 'fa-solid fa-gear',
-          },
-        ];
-      }
+      this.currentUser = user;
+      this.navBarMenus = !!user ? AUTH_MENU : NON_AUTH_MENU;
     });
   }
 }
