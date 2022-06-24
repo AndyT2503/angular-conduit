@@ -6,8 +6,8 @@ import {
   OnInit,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { User } from '../../models/user.model';
-import { AuthRepository } from '../../state/auth.repository';
+import { User } from '../../models';
+import { AuthRepository } from '../../state';
 
 type NavBarMenu = {
   url: string;
@@ -15,7 +15,7 @@ type NavBarMenu = {
   icon?: string;
 };
 
-const AUTH_MENU: NavBarMenu[] = [
+export const AUTH_MENU: NavBarMenu[] = [
   {
     url: '',
     title: 'Home',
@@ -30,7 +30,7 @@ const AUTH_MENU: NavBarMenu[] = [
   },
 ];
 
-const NON_AUTH_MENU: NavBarMenu[] = [
+export const NON_AUTH_MENU: NavBarMenu[] = [
   {
     url: '',
     title: 'Home',

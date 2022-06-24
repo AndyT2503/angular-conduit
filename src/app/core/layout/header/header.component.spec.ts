@@ -1,23 +1,87 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { render } from '@testing-library/angular';
+import { of } from 'rxjs';
+import { User } from '../../models';
+import { AuthRepository } from '../../state';
 
-import { HeaderComponent } from './header.component';
+import { AUTH_MENU, HeaderComponent, NON_AUTH_MENU } from './header.component';
 
-describe('HeaderComponent', () => {
-  let component: HeaderComponent;
-  let fixture: ComponentFixture<HeaderComponent>;
+const SAMPLE_USER: User = {
+  email: 'mail@mail.com',
+  id: 1,
+  password: '123445',
+  username: 'andyt',
+};
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ HeaderComponent ]
-    })
-    .compileComponents();
+async function setup() {}
 
-    fixture = TestBed.createComponent(HeaderComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+describe(HeaderComponent.name, () => {
+  const mockedAuthRepositoryWithAuthUser = jasmine.createSpyObj<AuthRepository>(
+    AuthRepository.name,
+    [],
+    {
+      authUser$: of(SAMPLE_USER),
+    }
+  );
+
+  const mockedAuthRepositoryWithNonAuthUser =
+    jasmine.createSpyObj<AuthRepository>(AuthRepository.name, [], {
+      authUser$: of(null),
+    });
+
+  const setup = async (
+    mockedAuthRepository: jasmine.SpyObj<AuthRepository>
+  ) => {
+    return await render(HeaderComponent, {
+      componentProviders: [
+        {
+          provide: AuthRepository,
+          useValue: mockedAuthRepository,
+        },
+      ],
+    });
+  };
+
+  it('should create component', async () => {
+    const { fixture } = await setup(mockedAuthRepositoryWithAuthUser);
+    const component = fixture.componentInstance;
+    expect(component).toBeTruthy();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should call load menu when init', async () => {
+    const { fixture } = await setup(mockedAuthRepositoryWithAuthUser);
+    const component = fixture.componentInstance;
+    spyOn(component, 'loadMenu');
+    component.ngOnInit();
+    expect(component.loadMenu).toHaveBeenCalled();
+  });
+
+  describe('when init', () => {
+    describe('when has auth user', () => {
+      it('should has currentUser', async () => {
+        const { fixture } = await setup(mockedAuthRepositoryWithAuthUser);
+        const component = fixture.componentInstance;
+        expect(component.currentUser).toEqual(SAMPLE_USER);
+      });
+
+      it('should has auth menu', async () => {
+        const { fixture } = await setup(mockedAuthRepositoryWithAuthUser);
+        const component = fixture.componentInstance;
+        expect(component.navBarMenus).toEqual(AUTH_MENU);
+      });
+    });
+
+    describe('when has no auth user', () => {
+      it('should not have currentUser', async () => {
+        const { fixture } = await setup(mockedAuthRepositoryWithNonAuthUser);
+        const component = fixture.componentInstance;
+        expect(component.currentUser).toEqual(null);
+      });
+
+      it('should has non auth menu', async () => {
+        const { fixture } = await setup(mockedAuthRepositoryWithNonAuthUser);
+        const component = fixture.componentInstance;
+        expect(component.navBarMenus).toEqual(NON_AUTH_MENU);
+      });
+    });
   });
 });
