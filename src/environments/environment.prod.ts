@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  appDomain: 'localhost:4200'
+  appDomain: 'https://bright-centaur-dc348e.netlify.app'
 };
