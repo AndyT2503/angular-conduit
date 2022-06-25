@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Seo } from '../models';
 export const signUpSeo: Seo = {
   title: 'Sign up - Conduit',
@@ -32,7 +33,7 @@ export const signUpSeo: Seo = {
     },
     {
       property: 'og:url',
-      content: window.location.origin + '/#/register',
+      content: environment.appDomain + '/#/register',
     },
     {
       property: 'og:description',

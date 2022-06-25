@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  appDomain: 'localhost:4200'
 };

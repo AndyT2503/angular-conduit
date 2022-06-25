@@ -18,6 +18,7 @@ import {
 import { SeoService } from './../../shared/services/seo.service';
 import { CommentFormComponent } from './components/comment-form/comment-form.component';
 import { CommentListComponent } from './components/comment-list/comment-list.component';
+import { environment } from 'src/environments/environment';
 
 @UntilDestroy()
 @Component({
@@ -116,7 +117,7 @@ export class ArticleDetailComponent implements OnInit {
       },
       {
         property: 'og:url',
-        content: window.location.origin + '/#/article/' + article.slug,
+        content: environment.appDomain + '/#/article/' + article.slug,
       },
       {
         property: 'og:description',

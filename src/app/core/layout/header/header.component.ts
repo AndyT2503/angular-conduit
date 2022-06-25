@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   inject,
   OnInit,
@@ -15,7 +16,7 @@ type NavBarMenu = {
   icon?: string;
 };
 
-export const AUTH_MENU: NavBarMenu[] = [
+export const NON_AUTH_MENU: NavBarMenu[] = [
   {
     url: '',
     title: 'Home',
@@ -30,7 +31,7 @@ export const AUTH_MENU: NavBarMenu[] = [
   },
 ];
 
-export const NON_AUTH_MENU: NavBarMenu[] = [
+export const AUTH_MENU: NavBarMenu[] = [
   {
     url: '',
     title: 'Home',
@@ -57,7 +58,6 @@ export const NON_AUTH_MENU: NavBarMenu[] = [
 })
 export class HeaderComponent implements OnInit {
   private readonly authRepository = inject(AuthRepository);
-
   currentUser!: User | null;
   navBarMenus: NavBarMenu[] = [];
 

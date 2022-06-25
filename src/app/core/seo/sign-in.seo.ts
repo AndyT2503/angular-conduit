@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Seo } from '../models';
 export const signInSeo: Seo = {
   title: 'Sign in - Conduit',
@@ -32,7 +33,7 @@ export const signInSeo: Seo = {
     },
     {
       property: 'og:url',
-      content: window.location.origin + '/#/login',
+      content: environment.appDomain + '/#/login',
     },
     {
       property: 'og:description',

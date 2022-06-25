@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Seo } from '../models';
 
 export const editorSeo: Seo = {
@@ -33,7 +34,7 @@ export const editorSeo: Seo = {
     },
     {
       property: 'og:url',
-      content: window.location.origin + '/#/editor',
+      content: environment.appDomain + '/#/editor',
     },
     {
       property: 'og:description',

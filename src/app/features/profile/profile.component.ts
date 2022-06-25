@@ -12,6 +12,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { User } from 'src/app/core/models';
 import { AuthRepository, UserRepository } from 'src/app/core/state';
 import { SeoService } from 'src/app/shared/services/seo.service';
+import { environment } from 'src/environments/environment';
 import { ArticleToggleComponent } from './components/article-toggle/article-toggle.component';
 import { ProfileRepository } from './state/profile.repository';
 
@@ -93,7 +94,7 @@ export class ProfileComponent implements OnInit {
       },
       {
         property: 'og:url',
-        content: window.location.origin + '/#/' + `@${user.username}`,
+        content: environment.appDomain + '/#/' + `@${user.username}`,
       },
       {
         property: 'og:description',

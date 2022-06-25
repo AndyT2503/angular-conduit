@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Seo } from '../models';
 
 export const homeSeo: Seo = {
@@ -33,7 +34,7 @@ export const homeSeo: Seo = {
     },
     {
       property: 'og:url',
-      content: window.location.origin + '/#/',
+      content: environment.appDomain + '/#/',
     },
     {
       property: 'og:description',
