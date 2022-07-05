@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
 import { NonAuthGuard } from './core/guards/non-auth.guard';
 import { editorSeo, homeSeo, signInSeo, signUpSeo } from './core/seo';
+import { ArticleDetailTitleResolverService } from './features/article-detail/services/article-detail-title-resolver.service';
+import { ProfileTitleResolverService } from './features/profile/services/profile-title-resolver.service';
 
 export const appRoutes: Routes = [
   {
@@ -12,6 +14,7 @@ export const appRoutes: Routes = [
         (c) => c.SignInComponent
       ),
     data: signInSeo,
+    title: 'Sign in',
   },
   {
     path: 'register',
@@ -21,6 +24,7 @@ export const appRoutes: Routes = [
         (c) => c.SignUpComponent
       ),
     data: signUpSeo,
+    title: 'Sign up',
   },
   {
     path: 'settings',
@@ -29,6 +33,7 @@ export const appRoutes: Routes = [
       import('./features/setting/setting.component').then(
         (c) => c.SettingComponent
       ),
+    title: 'Settings',
   },
   {
     path: 'article/:slug',
@@ -36,6 +41,7 @@ export const appRoutes: Routes = [
       import('./features/article-detail/article-detail.component').then(
         (x) => x.ArticleDetailComponent
       ),
+    title: ArticleDetailTitleResolverService,
   },
   {
     path: 'editor',
@@ -44,6 +50,7 @@ export const appRoutes: Routes = [
     loadChildren: () =>
       import('./features/editor/editor.route').then((m) => m.editorRoutes),
     data: editorSeo,
+    title: 'Editor',
   },
   {
     path: '',
@@ -52,10 +59,12 @@ export const appRoutes: Routes = [
         (c) => c.NewsFeedComponent
       ),
     data: homeSeo,
+    title: 'Home',
   },
   {
     path: ':username',
     loadChildren: () =>
       import('./features/profile/profile.route').then((m) => m.profileRoutes),
+    title: ProfileTitleResolverService,
   },
 ];

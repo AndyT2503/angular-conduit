@@ -1,7 +1,6 @@
 import { environment } from 'src/environments/environment';
 import { Seo } from '../models';
 export const signInSeo: Seo = {
-  title: 'Sign in - Conduit',
   metaDefinition: [
     {
       name: 'title',

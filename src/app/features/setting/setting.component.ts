@@ -1,4 +1,4 @@
-import { SeoService } from './../../shared/services/seo.service';
+import { SeoService } from 'src/app/shared/services';
 
 import { CommonModule } from '@angular/common';
 import {
@@ -37,7 +37,6 @@ export class SettingComponent implements OnInit {
   settingForm!: TypedFormGroup<UserUpdateFormData>;
 
   ngOnInit(): void {
-    this.seoService.setTitle('Settings - Conduit');
     this.initForm();
     this.loadSettingForm();
   }

@@ -11,7 +11,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { User } from 'src/app/core/models';
 import { AuthRepository, UserRepository } from 'src/app/core/state';
-import { SeoService } from 'src/app/shared/services/seo.service';
+import { SeoService } from 'src/app/shared/services';
 import { environment } from 'src/environments/environment';
 import { ArticleToggleComponent } from './components/article-toggle/article-toggle.component';
 import { ProfileRepository } from './state/profile.repository';
@@ -62,7 +62,6 @@ export class ProfileComponent implements OnInit {
   }
 
   setSeoData(user: User): void {
-    this.seoService.setTitle(`@${user.username} - Conduit`);
     const metaDefinition: MetaDefinition[] = [
       {
         name: 'title',

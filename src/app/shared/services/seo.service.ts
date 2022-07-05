@@ -27,9 +27,6 @@ export class SeoService {
       switchMap((route) => route.data),
       tap((res) => {
         const seoData = res as Seo;
-        if (seoData.title) {
-          this.setTitle(seoData.title);
-        }
         if (seoData.metaDefinition) {
           this.setMetaTags(seoData.metaDefinition);
         }
@@ -40,9 +37,5 @@ export class SeoService {
   setMetaTags(tags: MetaDefinition[]): void {
     this.metaElements.forEach((el) => this.meta.removeTagElement(el));
     this.metaElements = this.meta.addTags(tags, false);
-  }
-
-  setTitle(title: string): void {
-    this.titleService.setTitle(title);
   }
 }

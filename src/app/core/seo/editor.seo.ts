@@ -2,7 +2,6 @@ import { environment } from 'src/environments/environment';
 import { Seo } from '../models';
 
 export const editorSeo: Seo = {
-  title: 'Editor - Conduit',
   metaDefinition: [
     {
       name: 'title',

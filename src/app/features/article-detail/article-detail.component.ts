@@ -15,10 +15,10 @@ import {
   AuthRepository,
   UserRepository,
 } from 'src/app/core/state';
-import { SeoService } from './../../shared/services/seo.service';
 import { CommentFormComponent } from './components/comment-form/comment-form.component';
 import { CommentListComponent } from './components/comment-list/comment-list.component';
 import { environment } from 'src/environments/environment';
+import { SeoService } from 'src/app/shared/services';
 
 @UntilDestroy()
 @Component({
@@ -85,7 +85,6 @@ export class ArticleDetailComponent implements OnInit {
   }
 
   setSeoData(article: Article): void {
-    this.seoService.setTitle(`${article.title} - Conduit`);
     const metaDefinition: MetaDefinition[] = [
       {
         name: 'title',

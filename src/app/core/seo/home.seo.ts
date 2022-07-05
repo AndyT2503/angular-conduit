@@ -2,7 +2,6 @@ import { environment } from 'src/environments/environment';
 import { Seo } from '../models';
 
 export const homeSeo: Seo = {
-  title: 'Home - Conduit',
   metaDefinition: [
     {
       name: 'title',
