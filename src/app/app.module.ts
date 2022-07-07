@@ -7,6 +7,7 @@ import { appRoutes } from './app.routes';
 import { FooterComponent } from './core/layout/footer/footer.component';
 import { HeaderComponent } from './core/layout/header/header.component';
 import { SeoService, TitleStrategyService } from './shared/services';
+import { TransferHttpCacheModule } from '@nguniversal/common'
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,6 +15,7 @@ import { SeoService, TitleStrategyService } from './shared/services';
   imports: [
     BrowserModule.withServerTransition({ appId: 'real-world-conduit' }),
     HeaderComponent,
+    //TransferHttpCacheModule,
     RouterModule,
     FooterComponent,
     RouterModule.forRoot(appRoutes, {

@@ -1,6 +1,6 @@
 <div class="article-preview">
   <div class="article-meta">
-    <img class="avatar" src="assets/img/avatar.jpg" />
+    <img alt="avatar" class="avatar" src="assets/img/avatar.jpg" />
     <div class="info">
       <a [routerLink]="'/@' + author.username" class="author">{{ author.username }}</a>
       <p class="date">{{ article.creationTime | date: "MMMM d, y" }}</p>
@@ -25,7 +25,7 @@
       <span class="read-more">Read more...</span>
       <div class="tags">
         <ng-container *ngFor="let tag of article.tags"
-          ><a class="tag-default">{{tag}}</a>
+          ><span class="tag-default">{{tag}}</span>
         </ng-container>
       </div>
     </div>

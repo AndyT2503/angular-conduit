@@ -10,7 +10,7 @@
         class="card-footer"
         *ngIf="loadAuthorComment(comment.userId) | async as author"
       >
-        <img src="assets/img/avatar.jpg" class="avatar" />
+        <img alt="avatar" src="assets/img/avatar.jpg" class="avatar" />
         <a class="author" [routerLink]="['/@' + author.username]">{{
           author.username
         }}</a>

@@ -3,22 +3,22 @@
     <ng-container *ngFor="let tab of _tabList">
       <li class="nav-item">
         <ng-container *ngIf="tabType === TabType.Link; else noneLink">
-          <a
+          <span
             [routerLink]="[tab.link]"
             class="nav-link"
             routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }"
             (isActiveChange)="tabActiveChange($event, tab)"
-            >{{ tab.title }}</a
+            >{{ tab.title }}</span
           >
         </ng-container>
         <ng-template #noneLink>
-          <a
+          <span
             class="nav-link cursor-pointer"
             *ngIf="(activeTabTitle$ | async) as activeTabTitle"
             [ngClass]="{'active': activeTabTitle === tab.title}"
             (click)="onClickTabNoneLink(activeTabTitle === tab.title, tab)"
-            >{{ tab.title }}</a
+            >{{ tab.title }}</span
           >
         </ng-template>
       </li>

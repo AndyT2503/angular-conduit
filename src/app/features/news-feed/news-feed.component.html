@@ -19,9 +19,9 @@
       <p>Popular Tags</p>
       <div>
         <ng-container *ngFor="let tag of trendingTags">
-          <a (click)="selectTag(tag)" class="tag-default trending-tag">{{
+          <span (click)="selectTag(tag)" class="tag-default trending-tag">{{
             tag
-          }}</a>
+          }}</span>
         </ng-container>
       </div>
     </div>

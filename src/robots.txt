@@ -1,0 +1,4 @@
+User-agent:*
+Disallow:
+
+Sitemap: https://bright-centaur-dc348e.netlify.app/sitemap.xml

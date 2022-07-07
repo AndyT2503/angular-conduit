@@ -11,7 +11,7 @@
   <p class="article-content">{{ article.content }}</p>
   <div class="tags">
     <ng-container *ngFor="let tag of article.tags"
-      ><a class="tag-default">{{ tag }}</a>
+      ><span class="tag-default">{{ tag }}</span>
     </ng-container>
   </div>
 </div>
@@ -40,7 +40,7 @@
 
 <ng-template #articleMeta let-type="type">
   <div class="article-meta">
-    <img class="avatar" src="assets/img/avatar.jpg" />
+    <img alt="avatar" class="avatar" src="assets/img/avatar.jpg" />
     <div class="info">
       <a
         [routerLink]="['/@' + author.username]"
