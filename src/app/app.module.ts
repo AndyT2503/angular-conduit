@@ -15,7 +15,7 @@ import { TransferHttpCacheModule } from '@nguniversal/common'
   imports: [
     BrowserModule.withServerTransition({ appId: 'real-world-conduit' }),
     HeaderComponent,
-    //TransferHttpCacheModule,
+    TransferHttpCacheModule,
     RouterModule,
     FooterComponent,
     RouterModule.forRoot(appRoutes, {
