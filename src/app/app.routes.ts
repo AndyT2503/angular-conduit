@@ -18,7 +18,7 @@ export const appRoutes: Routes = [
   },
   {
     path: 'register',
-    canLoad: [NonAuthGuard],
+    canActivate: [NonAuthGuard],
     loadComponent: () =>
       import('./features/sign-up/sign-up.component').then(
         (c) => c.SignUpComponent
