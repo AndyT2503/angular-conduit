@@ -1,8 +1,8 @@
-import { UserRepository } from 'src/app/core/state/user.repository';
 import { inject, Injectable } from '@angular/core';
 import { createStore, select, withProps } from '@ngneat/elf';
 import { localStorageStrategy, persistState } from '@ngneat/elf-persist-state';
 import { defer, Observable, of, switchMap } from 'rxjs';
+import { UserRepository } from 'src/app/core/state/user.repository';
 import { ArticleType } from 'src/app/features/profile/components/profile-article-list/profile-article-list.di';
 import { GlobalArticles } from '../data/articles.data';
 import { Article } from '../models/article.model';
@@ -44,21 +44,17 @@ export class ArticleRepository {
   private readonly userRepository = inject(UserRepository);
   loadArticleByType(type: ArticleType, user: User): Observable<Article[]> {
     return this.articles$.pipe(
-      switchMap((res) =>
-        defer(() => {
-          if (type === ArticleType.FavoritedArticle) {
-            const articles = res!.filter((article) =>
-              user?.favoritedArticles?.includes(article.id)
-            );
-            return of(articles);
-          } else {
-            const articles = res!.filter(
-              (article) => article.userId === user.id
-            );
-            return of(articles);
-          }
-        })
-      )
+      switchMap((res) => {
+        if (type === ArticleType.FavoritedArticle) {
+          const articles = res!.filter((article) =>
+            user?.favoritedArticles?.includes(article.id)
+          );
+          return of(articles);
+        } else {
+          const articles = res!.filter((article) => article.userId === user.id);
+          return of(articles);
+        }
+      })
     );
   }
 
