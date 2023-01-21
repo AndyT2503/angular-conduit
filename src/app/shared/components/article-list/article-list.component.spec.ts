@@ -1,4 +1,3 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { render } from '@testing-library/angular';
 import { Article } from 'src/app/core/models';
@@ -55,7 +54,7 @@ describe(ArticleListComponent.name, () => {
       const articleComponents = debugElement.queryAll(
         By.directive(ArticleComponent)
       );
-      expect(articleComponents.length).toEqual(2);
+      expect(articleComponents.length).toEqual(mockedArticleList.length);
     });
     it('Show #noArticle when article list is empty', async () => {
       const { debugElement } = await setup();
