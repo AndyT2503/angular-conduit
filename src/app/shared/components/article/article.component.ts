@@ -6,10 +6,14 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { Observable, of, switchMap, take } from 'rxjs';
+import { Router, RouterModule } from '@angular/router';
+import { Observable, of, switchMap, take, tap } from 'rxjs';
 import { Article, User } from 'src/app/core/models';
-import { UserRepository, ArticleRepository, AuthRepository } from 'src/app/core/state';
+import {
+  UserRepository,
+  ArticleRepository,
+  AuthRepository,
+} from 'src/app/core/state';
 
 @Component({
   selector: 'app-article[article]',
@@ -24,6 +28,8 @@ export class ArticleComponent implements OnInit {
   private readonly userRepository = inject(UserRepository);
   private readonly articleRepository = inject(ArticleRepository);
   private readonly authRepository = inject(AuthRepository);
+  private readonly router = inject(Router);
+  private isAuthenticated!: boolean;
   author!: User;
   ngOnInit() {
     this.userRepository
@@ -34,6 +40,7 @@ export class ArticleComponent implements OnInit {
 
   get checkFavoritedArticle(): Observable<boolean> {
     return this.authRepository.authUser$.pipe(
+      tap((user) => (this.isAuthenticated = !!user)),
       switchMap((user) => {
         if (!user) {
           return of(false);
@@ -45,6 +52,10 @@ export class ArticleComponent implements OnInit {
   }
 
   favoriteArticle(): void {
+    if (!this.isAuthenticated) {
+      this.router.navigate(['/register']);
+      return;
+    }
     this.articleRepository.updateFavoriteArticle(this.article.id);
   }
 
