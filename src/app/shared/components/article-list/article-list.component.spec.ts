@@ -1,39 +1,13 @@
 import { By } from '@angular/platform-browser';
 import { render } from '@testing-library/angular';
 import { Article } from 'src/app/core/models';
+import { getListMockedArticle } from 'src/app/testing.spec';
 import { ArticleComponent } from '../article/article.component';
 
 import { ArticleListComponent } from './article-list.component';
 
 describe(ArticleListComponent.name, () => {
-  const mockedArticleList: Article[] = [
-    {
-      content:
-        'Share your knowledge and enpower the community by creating a new implementation',
-      creationTime: new Date(),
-      slug: 'Create-a-new-implementation-1',
-      tags: ['implementations'],
-      title: 'Create a new implementation',
-      userId: 1,
-      id: 1,
-      description:
-        'Share your knowledge and enpower the community by creating a new implementation',
-      favorited: 0,
-    },
-    {
-      content:
-        'Share your knowledge and enpower the community by creating a new implementation',
-      creationTime: new Date(),
-      slug: 'Create-a-new-implementation-1',
-      tags: ['implementations'],
-      title: 'Create a new implementation',
-      userId: 1,
-      id: 1,
-      description:
-        'Share your knowledge and enpower the community by creating a new implementation',
-      favorited: 0,
-    },
-  ];
+  const mockedArticleList: Article[] = getListMockedArticle();
 
   async function setup(articleList: Article[] = []) {
     return await render(ArticleListComponent, {

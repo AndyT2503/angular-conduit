@@ -5,7 +5,7 @@
       <a [routerLink]="'/@' + author.username" class="author">{{ author.username }}</a>
       <p class="date">{{ article.creationTime | date: "MMMM d, y" }}</p>
     </div>
-    <button *ngIf="!(checkFavoritedArticle | async); else unfavorite" class="btn favorite-btn btn-sm ms-auto" (click)="favoriteArticle()">
+    <button *ngIf="!checkFavoritedArticle; else unfavorite" class="btn favorite-btn btn-sm ms-auto" (click)="favoriteArticle()">
       <i class="fa-solid fa-heart"></i> {{article.favorited}}
     </button>
     <ng-template #unfavorite>

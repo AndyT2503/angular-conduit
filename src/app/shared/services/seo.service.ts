@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Meta, MetaDefinition, Title } from '@angular/platform-browser';
+import { Meta, MetaDefinition } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map, switchMap, tap } from 'rxjs';
 import { Seo } from 'src/app/core/models';
@@ -9,7 +9,6 @@ import { Seo } from 'src/app/core/models';
 })
 export class SeoService {
   private metaElements: HTMLMetaElement[] = [];
-  private readonly titleService = inject(Title);
   private readonly meta = inject(Meta);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly router = inject(Router);

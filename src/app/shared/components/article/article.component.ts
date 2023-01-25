@@ -7,12 +7,12 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { Observable, of, switchMap, take, tap } from 'rxjs';
+import { take } from 'rxjs';
 import { Article, User } from 'src/app/core/models';
 import {
-  UserRepository,
   ArticleRepository,
   AuthRepository,
+  UserRepository,
 } from 'src/app/core/state';
 
 @Component({
@@ -30,25 +30,31 @@ export class ArticleComponent implements OnInit {
   private readonly authRepository = inject(AuthRepository);
   private readonly router = inject(Router);
   private isAuthenticated!: boolean;
+  checkFavoritedArticle!: boolean;
   author!: User;
   ngOnInit() {
+    this.loadAuthor();
+    this.loadAuthUser();
+  }
+
+  private loadAuthor(): void {
     this.userRepository
       .getUserById(this.article.userId)
       .pipe(take(1))
       .subscribe((res) => (this.author = res));
   }
 
-  get checkFavoritedArticle(): Observable<boolean> {
-    return this.authRepository.authUser$.pipe(
-      tap((user) => (this.isAuthenticated = !!user)),
-      switchMap((user) => {
-        if (!user) {
-          return of(false);
-        } else {
-          return of(!!user?.favoritedArticles?.includes(this.article.id));
-        }
-      })
-    );
+  private loadAuthUser(): void {
+    this.authRepository.authUser$.pipe(take(1)).subscribe((user) => {
+      this.isAuthenticated = !!user;
+      if (!this.isAuthenticated) {
+        this.checkFavoritedArticle = false;
+      } else {
+        this.checkFavoritedArticle = !!user?.favoritedArticles?.includes(
+          this.article.id
+        );
+      }
+    });
   }
 
   favoriteArticle(): void {
