@@ -1,4 +1,4 @@
-import { Article, User } from './core/models';
+import { Article, Seo, User } from './core/models';
 
 export function getMockedArticle(id: number = 1, userId: number = 1): Article {
   return {
@@ -14,13 +14,16 @@ export function getMockedArticle(id: number = 1, userId: number = 1): Article {
   };
 }
 
-export function getMockedUser(id: number = 1, favoritedArticles: number[] = []): User {
+export function getMockedUser(
+  id: number = 1,
+  favoritedArticles: number[] = []
+): User {
   return {
     email: 'Gerome@mail.com',
     id,
     password: '123456',
     username: 'Gerome',
-    favoritedArticles
+    favoritedArticles,
   };
 }
 
@@ -49,4 +52,23 @@ export function getListMockedArticle(): Article[] {
       favorited: 0,
     },
   ];
+}
+
+export function getMockedSeoData(): Seo {
+  return {
+    metaDefinition: [
+      {
+        name: 'title',
+        content: 'Sign in - Conduit',
+      },
+      {
+        name: 'description',
+        content: `Login to your Real World Conduits' account to use all functions`,
+      },
+      {
+        name: 'twitter:card',
+        content: 'summary',
+      },
+    ],
+  };
 }
