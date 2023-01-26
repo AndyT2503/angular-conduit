@@ -140,12 +140,12 @@ describe(ArticleComponent.name, () => {
       );
       renderResult = await setup(mockedAuthRepository);
     });
-    it('Then checkFavoritedArticle is false', async () => {
+    it('Then checkFavoritedArticle is false', () => {
       const { fixture } = renderResult;
       expect(fixture.componentInstance.checkFavoritedArticle).toEqual(false);
     });
 
-    it('Hide unfavorite btn', async () => {
+    it('Hide unfavorite btn', () => {
       const { debugElement } = renderResult;
       const unfavoriteBtn = debugElement.query(By.css('.unfavorite-btn'));
       expect(unfavoriteBtn).toBeFalsy();
