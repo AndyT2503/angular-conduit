@@ -14,7 +14,7 @@ export type TabItem = {
   title: string;
 };
 
-enum TabType {
+export enum TabType {
   Link,
   NoneLink,
 }
@@ -35,7 +35,7 @@ export class TabToggleComponent {
   @Input()
   set tabList(value: TabItem[]) {
     this._tabList = value;
-    this.tabType = !this._tabList[0].link ? TabType.NoneLink : TabType.Link;
+    this.tabType = this._tabList[0].link === undefined ? TabType.NoneLink : TabType.Link;
   }
 
   @Input()
