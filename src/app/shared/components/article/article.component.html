@@ -2,7 +2,7 @@
   <div class="article-meta">
     <img alt="avatar" class="avatar" src="assets/img/avatar.jpg" />
     <div class="info">
-      <a [routerLink]="'/@' + author.username" class="author">{{ author.username }}</a>
+      <a [routerLink]="'/@' + author?.username" class="author">{{ author?.username }}</a>
       <p class="date">{{ article.creationTime | date: "MMMM d, y" }}</p>
     </div>
     <button *ngIf="!checkFavoritedArticle; else unfavorite" class="btn favorite-btn btn-sm ms-auto" (click)="favoriteArticle()">

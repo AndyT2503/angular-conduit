@@ -86,10 +86,10 @@ describe(ArticleComponent.name, () => {
     const authorLink = debugElement.query(By.css('.author'));
     expect(authorLink.nativeElement).toHaveAttribute(
       'href',
-      '/@' + fixture.componentInstance.author.username
+      '/@' + fixture.componentInstance.author!.username
     );
     expect(authorLink.nativeElement).toHaveTextContent(
-      fixture.componentInstance.author.username
+      fixture.componentInstance.author!.username
     );
   });
 

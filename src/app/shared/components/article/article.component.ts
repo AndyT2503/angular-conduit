@@ -31,7 +31,7 @@ export class ArticleComponent implements OnInit {
   private readonly router = inject(Router);
   private isAuthenticated!: boolean;
   checkFavoritedArticle!: boolean;
-  author!: User;
+  author?: User;
   ngOnInit() {
     this.loadAuthor();
     this.loadAuthUser();
