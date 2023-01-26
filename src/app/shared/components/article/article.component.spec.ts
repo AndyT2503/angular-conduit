@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { render } from '@testing-library/angular';
+import { render, RenderResult } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { of } from 'rxjs';
 import { Article } from 'src/app/core/models';
@@ -98,7 +98,10 @@ describe(ArticleComponent.name, () => {
     const articleCreationTime = debugElement.query(By.css('.date'));
     const locale = debugElement.injector.get(LOCALE_ID);
     expect(articleCreationTime.nativeElement).toHaveTextContent(
-      new DatePipe(locale).transform(mockedArticle.creationTime, 'MMMM d, y') as string
+      new DatePipe(locale).transform(
+        mockedArticle.creationTime,
+        'MMMM d, y'
+      ) as string
     );
     const articleLink = debugElement.query(By.css('.preview-link'));
     expect(articleLink.nativeElement).toHaveAttribute(
@@ -125,7 +128,9 @@ describe(ArticleComponent.name, () => {
   });
 
   describe('When user is unAuthenticated', () => {
-    it('Then checkFavoritedArticle is false', async () => {
+    let renderResult: RenderResult<ArticleComponent>;
+
+    beforeEach(async () => {
       const mockedAuthRepository = jasmine.createSpyObj<AuthRepository>(
         AuthRepository.name,
         [],
@@ -133,32 +138,21 @@ describe(ArticleComponent.name, () => {
           authUser$: of(null),
         }
       );
-      const { fixture } = await setup(mockedAuthRepository);
+      renderResult = await setup(mockedAuthRepository);
+    });
+    it('Then checkFavoritedArticle is false', async () => {
+      const { fixture } = renderResult;
       expect(fixture.componentInstance.checkFavoritedArticle).toEqual(false);
     });
 
     it('Hide unfavorite btn', async () => {
-      const mockedAuthRepository = jasmine.createSpyObj<AuthRepository>(
-        AuthRepository.name,
-        [],
-        {
-          authUser$: of(null),
-        }
-      );
-      const { debugElement } = await setup(mockedAuthRepository);
+      const { debugElement } = renderResult;
       const unfavoriteBtn = debugElement.query(By.css('.unfavorite-btn'));
       expect(unfavoriteBtn).toBeFalsy();
     });
 
     it('Then navigate to sign up page when toggle favorite button', async () => {
-      const mockedAuthRepository = jasmine.createSpyObj<AuthRepository>(
-        AuthRepository.name,
-        [],
-        {
-          authUser$: of(null),
-        }
-      );
-      const { debugElement } = await setup(mockedAuthRepository);
+      const { debugElement } = renderResult;
       const navigateSpy = spyOn(mockedRouter, 'navigate');
       const favoriteBtn = debugElement.query(By.css('.favorite-btn'));
       await userEvent.click(favoriteBtn.nativeElement);
