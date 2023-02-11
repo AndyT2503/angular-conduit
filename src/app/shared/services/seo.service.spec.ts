@@ -41,8 +41,7 @@ describe(SeoService.name, () => {
     service = debugElement.injector.get(SeoService);
     if (alreadyHasHTMLMetaElement) {
       currentHTMLMetaElements = [{} as HTMLMetaElement, {} as HTMLMetaElement];
-      // @ts-ignore
-      service.metaElements = currentHTMLMetaElements;
+      service['metaElements'] = currentHTMLMetaElements;
     } else {
       currentHTMLMetaElements = [];
     }
